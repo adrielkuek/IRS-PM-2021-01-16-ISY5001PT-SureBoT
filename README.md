@@ -33,11 +33,13 @@ pip install -r requirements.txt
 ```
 **Step 4: Download the Models**
 
-Download BERT pretrained: https://drive.google.com/drive/folders/10pCx4-IYxctOtrAJjBPDZ7kum87FoqjM?usp=sharing
-Download models: https://drive.google.com/drive/folders/1EL90Wm1W5HW2jSLxQ8nSlDRBHwLQRTHj?usp=sharing
+**Download BERT pretrained**: https://drive.google.com/drive/folders/10pCx4-IYxctOtrAJjBPDZ7kum87FoqjM?usp=sharing
+
+**Download models**: https://drive.google.com/drive/folders/1EL90Wm1W5HW2jSLxQ8nSlDRBHwLQRTHj?usp=sharing
+
 Place the folders ``models/`` and ``pretrained_models/`` into the code working directory
 
-The folder will look like this:
+The folders will look like this:
 ```
 pretrained_models/BERT-Pair/
     	pytorch_model.bin
