@@ -102,4 +102,5 @@ class GEAR(nn.Module):
             evi_map.append(list(intermediate_value))
  
         inputs = F.relu(torch.mm(inputs, self.weight) + self.bias)
+        evidence_num.clear()
         return F.log_softmax(inputs, dim=1), evi_map

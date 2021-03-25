@@ -280,6 +280,7 @@ class graphNetFC(object):
         graphNet_model.eval()
 
         # 10. Retrieve Graph Net output scores
+        outputs, heatmap = [], []
         with torch.no_grad():
             test_features = test_features.to(self.device)
             test_claims = test_claims.to(self.device)
@@ -303,16 +304,18 @@ def main():
     #                     'People who are born in Singapore are Singaporeans',
     #                     'Singaporeans are a bunch cool people.']
 
-    input_claim = 'WhatsApp users do not require to pay when sending "Good Morning" messages!'
-    input_evidence = [ 
-     'The message has recently been circulating among many WhatsApp users in Singapore',
-     'The above message that has been "forwarded many times" is not real', 
-     'WhatsApp remains a free messaging app and do not require payment details to be given prior to use']
+    # input_claim = 'WhatsApp users do not require to pay when sending "Good Morning" messages!'
+    # input_evidence = [ 
+    #  'The message has recently been circulating among many WhatsApp users in Singapore',
+    #  'The above message that has been "forwarded many times" is not real', 
+    #  'WhatsApp remains a free messaging app and do not require payment details to be given prior to use']
 
-    # input_claim = 'Will I need to pay for sending good morning messages / images?'
-    # input_evidence = ['WhatsApp users in Singapore, belonging to a certain demographic,', 
-    # 'had their world rocked recently after they received messages informing them that they would have to pay for using "Good Morning" images.', 
-    # 'WhatsApp remains a free messaging app and does not require any payment details to be given prior to use']
+    input_claim = 'A bus driver has been arrested for careless driving following an accident at Loyang Avenue that killed a 31-year-old cyclist.'
+    input_evidence =  ["The cyclist who was killed along Loyang Avenue near the T-junction with Pasir Ris Drive 1 on Friday, March 19 has been identified as a 31-year-old man from the Philippines.",
+   "The deceased man has been identified as German Gonzales from the Philippines.",
+   "He has been working in Singapore for two years as an aircraft technician.",
+   "The victim and his wife have two sons, aged eight and nine. Marie resides in the Philippines with the couple's children.",
+   "Following the accident, a bus driver, 63, was arrested for careless driving causing death."]
 
     # input_claim = 'A nurse in the states has just had the vaccine and she died 8 hours later. Politicians in the West including Pfizer CEO have NOT Taken the vaccine.'
     # input_evidence = ['No health care workers died after Alabama began administering COVID-19 vaccines on Tuesday',

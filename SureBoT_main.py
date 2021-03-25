@@ -58,9 +58,9 @@ if __name__ == "__main__":
     ER_pipeline = EvidenceRetrieval(cwd, device)
     
     ################# SAMPLE QUERIES/URLS #####################
-    # query = "A bus driver has been arrested for careless driving following an accident at Loyang Avenue that killed a 31-year-old cyclist."
+    query = "A bus driver has been arrested for careless driving following an accident at Loyang Avenue that killed a 31-year-old cyclist."
     # query = "I will be charged for sending Whatsapp Good morning messages"
-    query = "Alabama nurse in the states has just had the vaccine and she died 8 hours later"
+    # query = "Alabama nurse in the states has just had the vaccine and she died 8 hours later"
     # query = "https://www.straitstimes.com/singapore/bus-driver-arrested-for-careless-driving-after-cyclist-31-pronounced-dead-in-loyang?utm_source=Telegram&utm_medium=Social&utm_campaign=STTG"
     # query = "https://www.theonlinecitizen.com/2020/07/03/10-mil-population-debacle-sdp-questions-why-former-dpm-heng-did-not-refute-st-report-at-the-time-it-was-published/"
     # query = "https://newnaratif.com/podcast/an-interview-with-dr-paul-tambyah/"
@@ -115,7 +115,7 @@ if __name__ == "__main__":
             # Plot Attention Heat map to visualize
             ax = sns.heatmap(heatmap, linewidth=1.0, cmap="YlGnBu")
             plt.show()
-            plt.clear()
+            plt.clf()
 
         maj_vote = 0
         for i in range(len(Filtered_Articles)):

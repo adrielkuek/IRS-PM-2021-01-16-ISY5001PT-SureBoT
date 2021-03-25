@@ -54,7 +54,7 @@ class EvidenceRetrieval(object):
         SentenceModel_dir = self.filepath + '/models/msmarco-distilroberta-base-v2'
         self.sentenceTokenizer = AutoTokenizer.from_pretrained(SentenceModel_dir)
         self.sentenceBERT = AutoModel.from_pretrained(SentenceModel_dir)
-        print('\n*******DISTILBERT MODEL LOADED*******')
+        print('\n*******DISTILROBERTA MODEL LOADED*******')
         print(f'>>>>>>> TIME TAKEN - MODELS LOADING: {time.time() - start_time}')
 
     def AbstractiveSummary(self, input_text, length_penalty):
