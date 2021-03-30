@@ -55,6 +55,12 @@ models/bart-large-cnn
 	3layerbest.pth
 	4layerbest.pth
 ```
+**Step 5: Download Spacy Model**
+
+Download ``en_core_web_sm`` via the following command
+```
+python -m spacy download en_core_web_sm
+```
 
 ## Getting Started
 **Step 1: Input the query**
