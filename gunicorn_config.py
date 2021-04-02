@@ -11,7 +11,6 @@ keepalive = 2
 errorlog = 'error.log'
 loglevel = 'debug'
 accesslog = 'access.log'
-preload = True
 
 
 def post_fork(server, worker):
