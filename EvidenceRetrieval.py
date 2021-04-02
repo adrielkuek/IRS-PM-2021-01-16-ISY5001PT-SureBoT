@@ -155,7 +155,7 @@ def main():
     # Initialization
     #####################################################
     start = time.time()
-    cwd = os.path.dirname(__file__)
+    cwd = os.path.dirname(os.path.realpath(__file__))
     print(f'INITIALISE EVIDENCE RETRIEVAL PIPELINE . . .')
     ER_pipeline = EvidenceRetrieval(cwd, device)
     
