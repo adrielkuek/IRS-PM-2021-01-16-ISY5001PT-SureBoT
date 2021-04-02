@@ -3,9 +3,11 @@ import requests
 import time
 import urllib
 import config
-from .dbhelper import DBHelper
+from dbhelper import DBHelper
 from transformers import pipeline
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
+import gdown
+import zipfile, os
 
 TIMEOUT = config.timeout
 TOKEN = config.token
@@ -86,6 +88,17 @@ def initBERT():
     global nlpClassify
     nlpClassify = pipeline(task='zero-shot-classification', tokenizer=tokenizer, model=model)
     print("BERT has been initialized")
+
+
+def downloadModels():
+    url = 'https://drive.google.com/uc?id=14cNpXSCiN0Wv1rcQYOjyzmty3RqOQYwC'
+    output = 'pipeline_models.zip'
+    gdown.download(url, output, quiet=False)
+
+    zip_ref = zipfile.ZipFile(output)  # createzipfileobject
+    zip_ref.extractall()  # extractfiletodir
+    zip_ref.close()  # closefile
+    os.remove(output)  # deletezippedfile
 
 
 def bertClassify(sequences):

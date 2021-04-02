@@ -4,6 +4,7 @@ import json
 from src.main import handle_update
 from src.main import setupDB
 from src.main import initBERT
+from src.main import downloadModels
 
 main_app = Flask(__name__, static_url_path='/static')
 
@@ -24,6 +25,7 @@ def initCode():
     print('test is successful')
     setupDB()
     initBERT()
+    downloadModels()
 
 
 if __name__ == '__main__':
