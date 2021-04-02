@@ -1,10 +1,10 @@
 from flask import Flask
 from flask import request
 import json
-from src.main import handle_update
-from src.main import setupDB
-from src.main import initBERT
-from src.main import downloadModels
+from main import handle_update
+from main import setupDB
+from main import initBERT
+from main import downloadModels
 
 main_app = Flask(__name__, static_url_path='/static')
 
