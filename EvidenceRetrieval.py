@@ -45,13 +45,13 @@ class EvidenceRetrieval(object):
         # Load Models
         start_time = time.time()
         print(f'LOADING PEGASUS MODEL . . .')
-        PegasusModel_dir = self.filepath  + '/models/pegasus-cnn_dailymail'
+        PegasusModel_dir = self.filepath  + '/pipeline_models/models/pegasus-cnn_dailymail'
         self.PegasusTokenizer = PegasusTokenizer.from_pretrained(PegasusModel_dir)
         self.PegasusModel = PegasusForConditionalGeneration.from_pretrained(PegasusModel_dir).to(self.device)
         print('\n*******PEGASUS TOKENIZER AND MODEL LOADED*******')
         print(f'LOADING SENTENCE-BERT MODEL . . .')
-        # SentenceModel_dir = self.filepath + '/models/stsb-distilbert-base'
-        SentenceModel_dir = self.filepath + '/models/msmarco-distilroberta-base-v2'
+        # SentenceModel_dir = self.filepath + '/pipeline_models/models/stsb-distilbert-base'
+        SentenceModel_dir = self.filepath + '/pipeline_models/models/msmarco-distilroberta-base-v2'
         self.sentenceTokenizer = AutoTokenizer.from_pretrained(SentenceModel_dir)
         self.sentenceBERT = AutoModel.from_pretrained(SentenceModel_dir)
         print('\n*******DISTILROBERTA MODEL LOADED*******')

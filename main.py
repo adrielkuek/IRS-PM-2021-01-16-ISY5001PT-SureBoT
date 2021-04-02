@@ -95,9 +95,13 @@ def downloadModels():
     output = 'pipeline_models.zip'
     gdown.download(url, output, quiet=False)
 
+    print("Creating zip file object")
     zip_ref = zipfile.ZipFile(output)  # createzipfileobject
+    print("Extracting files to directory")
     zip_ref.extractall()  # extractfiletodir
+    print("Closing file")
     zip_ref.close()  # closefile
+    print("Creating zip file object")
     os.remove(output)  # deletezippedfile
 
 

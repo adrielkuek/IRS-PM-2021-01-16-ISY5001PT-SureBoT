@@ -42,8 +42,8 @@ from pytorch_pretrained_bert.modeling import BertModel
 from utils import load_bert_features_claim_inference
 from models import GEAR
 
-BERTpretrained_dir = 'pretrained_models/BERT-Pair/'
-graphNet_model_dir = 'models/2layerbest.pth.tar'
+BERTpretrained_dir = 'pipeline_models/pretrained_models/BERT-Pair/'
+graphNet_model_dir = 'pipeline_models/models/2layerbest.pth.tar'
 
 feature_num = 768
 evidence_num = 5
@@ -79,13 +79,13 @@ class graphNetFC(object):
 
         print(f'LOADING BERT PRETRAINED . . .')
         # Load BERT pretrained
-        self.tokenizer = BertTokenizer.from_pretrained(self.filepath + '/pretrained_models/BERT-Pair/', do_lower_case=True)
-        self.BERTmodel = BertModel.from_pretrained(self.filepath + '/pretrained_models/BERT-Pair/')
+        self.tokenizer = BertTokenizer.from_pretrained(self.filepath + '/pipeline_models/pretrained_models/BERT-Pair/', do_lower_case=True)
+        self.BERTmodel = BertModel.from_pretrained(self.filepath + '/pipeline_models/pretrained_models/BERT-Pair/')
         self.BERTmodel.to(self.device)
         self.BERTmodel.eval()
 
         print(f'LOADING GEAR PRETRAINED . . .')
-        self.GEAR_model = self.filepath + '/models/2layerbest.pth.tar'
+        self.GEAR_model = self.filepath + '/pipeline_models/models/2layerbest.pth.tar'
         # self.BERT_pretrainedMODEL = BERTpretrained_model
         # self.GEAR_model = GEAR_model
         
