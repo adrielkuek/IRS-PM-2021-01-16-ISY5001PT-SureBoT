@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import request
 import json
-from main import setupDB, downloadModels, build_keyboard, send_message
+from main import setupDB, downloadModels, send_message, build_inline_keyboard, answer_callback_query
 from AfterResponseMiddleware import AfterThisResponse
 from SureBoT_main import executePipeline
 
@@ -29,24 +29,33 @@ def initCode():
 
 
 def handle_update(update):
-    text = update["message"]["text"]
-    chat = update["message"]["chat"]["id"]
     try:
-        if text == "/start":
-            send_message("To Test Zero-Shot-Learning Classification Model with labels[misinformation, politics, "
+        if "message" in update:
+            text = update["message"]["text"]
+            chat = update["message"]["chat"]["id"]
+            if text == "/start":
+                send_message("To Test Zero-Shot-Learning Classification Model with labels[misinformation, politics, "
                          "health care], Send /classify with your text ", chat)
-        elif text.startswith("/pipeline"):
-            x = text.split("/pipeline ", 1)[1]
+            elif text.startswith("/pipeline"):
+                x = text.split("/pipeline ", 1)[1]
+                send_message('Your query is being processed.....', chat)
+            elif text.startswith("/test"):
+                x = text.split("/pipeline ", 1)[1]
+                send_message('Click on yes or no: ', chat, build_inline_keyboard(x))
+            elif text.startswith("/"):
+                return
+            else:
+                message = "The message entered is " + text
+                send_message(message, chat)
+        elif "callback_query" in update:
+            callback_query_id = update["callback_query"]["id"]
+            data = update["callback_query"]["data"]
+            chat = update["callback_query"]["message"]["chat"]["id"]
             @main_app.after_this_response
             def post_process():
-                send_message(executePipeline(x), chat)
+                send_message(executePipeline(data), chat)
                 print("after_response")
-            send_message('Your query is being processed.....', chat)
-        elif text.startswith("/"):
-            return
-        else:
-            message = "The message entered is " + text
-            send_message(message, chat)
+            answer_callback_query(callback_query_id, "Your query is being processed.....")
     except:
         message = 'Exception occurred while processing'
         print(message)

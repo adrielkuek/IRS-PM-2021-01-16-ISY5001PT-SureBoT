@@ -27,6 +27,11 @@ def build_keyboard(items):
     return json.dumps(reply_markup)
 
 
+def build_inline_keyboard(query):
+    reply_markup = {"inline_keyboard": [[{"text": "Yes", "callback_data": query},{"text": "No", "callback_data": "No button clicked"}]]}
+    return json.dumps(reply_markup)
+
+
 """
 def send_message(text, chat_id):
     text = urllib.parse.quote_plus(text)
@@ -52,6 +57,16 @@ def send_message(text, chat_id, reply_markup=None):
         url = URL + "sendMessage?text={}&chat_id={}&parse_mode=Markdown".format("Exception occurred", chat_id)
         print("Exception occurred")
     get_url(url)
+
+
+def answer_callback_query(query_id, text):
+    print('callback_query_called')
+    try:
+        text = urllib.parse.quote_plus(text)
+        url = URL + "answerCallbackQuery?callback_query_id={}&text={}&show_alert=True".format(query_id, text)
+        get_url(url)
+    except:
+        print("Exception occurred while processing callback query")
 
 
 def setupDB():
