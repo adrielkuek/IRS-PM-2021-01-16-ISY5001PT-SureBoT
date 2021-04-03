@@ -14,7 +14,9 @@ TOKEN = config.token
 URL = "https://api.telegram.org/bot{}/".format(TOKEN)
 db = DBHelper()
 LABELS = ['misinformation', 'politics', 'health care']
-
+MODEL_DOWNLOAD_URL = config.model_download_url
+MODEL_ZIP = config.model_zip
+MODEL_FOLDER = config.model_folder
 
 def handle_update(update):
     text = update["message"]["text"]
@@ -91,6 +93,25 @@ def initBERT():
 
 
 def downloadModels():
+    url = MODEL_DOWNLOAD_URL
+    output = MODEL_ZIP
+    try:
+        if os.path.isdir(os.path.dirname(os.path.realpath(__file__)) + MODEL_FOLDER):
+            print("Required models are already available")
+        else:
+            gdown.download(url, output, quiet=False)
+            print("Creating zip file object")
+            zip_ref = zipfile.ZipFile(output)  # createzipfileobject
+            print("Extracting files to directory")
+            zip_ref.extractall()  # extractfiletodir
+            zip_ref.close()  # closefile
+            print("Removing downloaded zip")
+            os.remove(output)  # deletezippedfile
+    except:
+        print("Models were not downloaded")
+
+
+
     url = 'https://drive.google.com/uc?id=14cNpXSCiN0Wv1rcQYOjyzmty3RqOQYwC'
     output = 'pipeline_models.zip'
     gdown.download(url, output, quiet=False)
