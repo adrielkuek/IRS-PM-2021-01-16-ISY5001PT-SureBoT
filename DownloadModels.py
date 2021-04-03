@@ -1,11 +1,12 @@
 import gdown
 import zipfile, os
+import config
 
 
-url = 'https://drive.google.com/uc?id=14cNpXSCiN0Wv1rcQYOjyzmty3RqOQYwC'
-output = 'pipeline_models.zip'
+url = config.model_download_url
+output = config.model_zip
 try:
-    if os.path.isdir(os.path.dirname(os.path.realpath(__file__)) + '/pipeline_models'):
+    if os.path.isdir(os.path.dirname(os.path.realpath(__file__)) + config.model_folder):
         print("Required models are already available")
     else:
         gdown.download(url, output, quiet=False)
