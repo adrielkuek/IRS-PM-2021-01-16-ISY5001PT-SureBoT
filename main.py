@@ -10,7 +10,6 @@ import gdown
 import zipfile, os
 from threading import Thread
 from SureBoT_main import executePipeline
-import botserver
 
 TIMEOUT = config.timeout
 TOKEN = config.token
@@ -20,47 +19,6 @@ LABELS = ['misinformation', 'politics', 'health care']
 MODEL_DOWNLOAD_URL = config.model_download_url
 MODEL_ZIP = config.model_zip
 MODEL_FOLDER = config.model_folder
-
-
-def handle_update(update):
-    text = update["message"]["text"]
-    chat = update["message"]["chat"]["id"]
-    try:
-        items = db.get_items(chat)
-        if text == "/done":
-            keyboard = build_keyboard(items)
-            send_message("Select an item to delete", chat, keyboard)
-        elif text == "/start":
-            send_message("Welcome to your personal To Do list. Send any text to me and I'll store it as an item. Send "
-                         "/done to remove items", chat)
-            send_message("To Test Zero-Shot-Learning Classification Model with labels[misinformation, politics, "
-                         "health care], Send /classify with your text ", chat)
-        elif text.startswith("/pipeline"):
-            x = text.split("/pipeline ", 1)[1]
-            post_process(x, chat)
-            send_message('Your query is being processed', chat)
-        elif text.startswith("/"):
-            return
-        elif text in items:
-            db.delete_item(text, chat)
-            items = db.get_items(chat)
-            keyboard = build_keyboard(items)
-            send_message("Select an item to delete", chat, keyboard)
-        else:
-            db.add_item(text, chat)
-            items = db.get_items(chat)
-            message = "\n".join(items)
-            send_message(message, chat)
-    except:
-        message = 'Exception occurred while processing'
-        print(message)
-        send_message(message, chat)
-
-
-@botserver.main_app.after_this_response
-def post_process(query, chatId):
-    send_message(executePipeline(query), chatId)
-    print("after_response")
 
 
 def build_keyboard(items):
@@ -131,8 +89,3 @@ def bertClassify(sequences):
     results = nlpClassify(sequences=sequences, candidate_labels=LABELS, multi_class=False)
     resultStr = json.dumps(results)
     return resultStr
-
-
-if __name__ == "__main__":
-    print('Starting thread')
-    Thread(target=start_pipeline(x)).start()

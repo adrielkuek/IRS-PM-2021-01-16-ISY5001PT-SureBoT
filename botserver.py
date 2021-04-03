@@ -1,14 +1,10 @@
 from flask import Flask
 from flask import request
 import json
-from main import handle_update
-from main import setupDB
-from main import initBERT
-from main import downloadModels
+from main import setupDB, downloadModels, build_keyboard, send_message
 from AfterResponseMiddleware import AfterThisResponse
 from SureBoT_main import executePipeline
 
-global main_app
 main_app = Flask(__name__, static_url_path='/static')
 AfterThisResponse(main_app)
 
@@ -30,6 +26,34 @@ def initCode():
     setupDB()
     # initBERT()
     downloadModels()
+
+
+def handle_update(update):
+    text = update["message"]["text"]
+    chat = update["message"]["chat"]["id"]
+    try:
+        if text == "/start":
+            send_message("To Test Zero-Shot-Learning Classification Model with labels[misinformation, politics, "
+                         "health care], Send /classify with your text ", chat)
+        elif text.startswith("/pipeline"):
+            x = text.split("/pipeline ", 1)[1]
+            post_process(x, chat)
+            send_message('Your query is being processed', chat)
+        elif text.startswith("/"):
+            return
+        else:
+            message = "The message entered is ".join(text)
+            send_message(message, chat)
+    except:
+        message = 'Exception occurred while processing'
+        print(message)
+        send_message(message, chat)
+
+
+@main_app.after_this_response
+def post_process(query, chatId):
+    send_message(executePipeline(query), chatId)
+    print("after_response")
 
 
 if __name__ == '__main__':
