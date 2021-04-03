@@ -58,7 +58,7 @@ def executePipeline(query):
     print(f'INITIALISE EVIDENCE RETRIEVAL PIPELINE . . .')
     ER_pipeline = EvidenceRetrieval(cwd, device)
 
-    output_message = "FACT-CHECK for: " + query
+    output_message = "*FACT-CHECK:* " + query
     ################# SAMPLE QUERIES/URLS #####################
     # query = "A bus driver has been arrested for careless driving following an accident at Loyang Avenue that killed a 31-year-old cyclist."
     # query = "I will be charged for sending Whatsapp Good morning messages"
@@ -137,9 +137,9 @@ def executePipeline(query):
             final_score = 'REFUTES'
             print(f'************** FINAL SCORE: REFUTES')
 
-        output_message += '\n\n************** FINAL SCORE' + final_score
+        output_message += '\n\n*FINAL SCORE:* ' + final_score
         for i in range(len(Filtered_Articles)):
-            output_message += '\n\n\n' + Filtered_Articles[i][2] + '\n'
+            output_message += '\n\n\n' + Filtered_Articles[i][2] + '\n\n'
             for j in range(len(Filtered_Articles[i][1])):
                 output_message += Filtered_Articles[i][1][j]
 
