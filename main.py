@@ -8,6 +8,7 @@ from transformers import pipeline
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import gdown
 import zipfile, os
+from SureBoT_main import executePipeline
 
 TIMEOUT = config.timeout
 TOKEN = config.token
@@ -17,6 +18,7 @@ LABELS = ['misinformation', 'politics', 'health care']
 MODEL_DOWNLOAD_URL = config.model_download_url
 MODEL_ZIP = config.model_zip
 MODEL_FOLDER = config.model_folder
+
 
 def handle_update(update):
     text = update["message"]["text"]
@@ -31,9 +33,9 @@ def handle_update(update):
                          "/done to remove items", chat)
             send_message("To Test Zero-Shot-Learning Classification Model with labels[misinformation, politics, "
                          "health care], Send /classify with your text ", chat)
-        elif text.startswith("/classify"):
-            x = text.split("/classify ", 1)[1]
-            send_message(bertClassify(x), chat)
+        elif text.startswith("/pipeline"):
+            x = text.split("/pipeline ", 1)[1]
+            send_message(executePipeline(x), chat)
         elif text.startswith("/"):
             return
         elif text in items:
