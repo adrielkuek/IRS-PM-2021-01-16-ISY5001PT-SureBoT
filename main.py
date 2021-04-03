@@ -63,7 +63,7 @@ def answer_callback_query(query_id, text):
     print('callback_query_called')
     try:
         text = urllib.parse.quote_plus(text)
-        url = URL + "answerCallbackQuery?callback_query_id={}&text={}&show_alert=True".format(query_id, text)
+        url = URL + "answerCallbackQuery?callback_query_id={}&text={}&show_alert=false".format(query_id, text)
         get_url(url)
     except:
         print("Exception occurred while processing callback query")

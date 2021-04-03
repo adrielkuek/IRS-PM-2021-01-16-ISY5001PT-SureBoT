@@ -34,19 +34,12 @@ def handle_update(update):
             text = update["message"]["text"]
             chat = update["message"]["chat"]["id"]
             if text == "/start":
-                send_message("To Test Zero-Shot-Learning Classification Model with labels[misinformation, politics, "
-                         "health care], Send /classify with your text ", chat)
-            elif text.startswith("/pipeline"):
-                x = text.split("/pipeline ", 1)[1]
-                send_message('Your query is being processed.....', chat)
-            elif text.startswith("/test"):
-                x = text.split("/pipeline ", 1)[1]
-                send_message('Click on yes or no: ', chat, build_inline_keyboard(x))
+                send_message("Do you need to fact check any message? Copy and paste it in the chat and we will do the work for you!!", chat)
             elif text.startswith("/"):
                 return
             else:
-                message = "The message entered is " + text
-                send_message(message, chat)
+                output = 'Do you want to fact check below message?\n\n' + text
+                send_message(output, chat, build_inline_keyboard(text))
         elif "callback_query" in update:
             callback_query_id = update["callback_query"]["id"]
             data = update["callback_query"]["data"]
