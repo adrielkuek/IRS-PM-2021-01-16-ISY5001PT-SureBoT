@@ -9,7 +9,7 @@ capture_output = True
 workers = 2
 worker_class = 'sync'
 worker_connections = 1000
-# timeout = 30
+timeout = 400
 keepalive = 2
 
 errorlog = 'error.log'
