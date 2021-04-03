@@ -48,7 +48,8 @@ sequence_length = 128
 # Aggregating method: top, max, mean, concat, att, sum
 graph_pool = 'att'
 
-if __name__ == "__main__":
+
+def executePipeline(query):
     #####################################################
     # Initialization
     #####################################################
@@ -56,9 +57,9 @@ if __name__ == "__main__":
     cwd = os.path.dirname(os.path.realpath(__file__))
     print(f'INITIALISE EVIDENCE RETRIEVAL PIPELINE . . .')
     ER_pipeline = EvidenceRetrieval(cwd, device)
-    
+
     ################# SAMPLE QUERIES/URLS #####################
-    query = "A bus driver has been arrested for careless driving following an accident at Loyang Avenue that killed a 31-year-old cyclist."
+    # query = "A bus driver has been arrested for careless driving following an accident at Loyang Avenue that killed a 31-year-old cyclist."
     # query = "I will be charged for sending Whatsapp Good morning messages"
     # query = "Alabama nurse in the states has just had the vaccine and she died 8 hours later"
     # query = "https://www.straitstimes.com/singapore/bus-driver-arrested-for-careless-driving-after-cyclist-31-pronounced-dead-in-loyang?utm_source=Telegram&utm_medium=Social&utm_campaign=STTG"
@@ -68,11 +69,12 @@ if __name__ == "__main__":
     print(f'INPUT QUERY: {query}')
 
     # Check URL Validity
-    headers = {'user-agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.835.163 Safari/535.1'}
+    headers = {
+        'user-agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.835.163 Safari/535.1'}
     query_urlstatus = validators.url(query)
     if query_urlstatus == True:
         querytext = fulltext(requests.get(query, headers=headers).text)
-    else: 
+    else:
         querytext = query
 
     # Use SPACY to get number of tokens
@@ -88,7 +90,7 @@ if __name__ == "__main__":
     # Else just skip and perform Doc Retrieval
     if len(sentenceToken) > 50:
         querytext = ER_pipeline.AbstractiveSummary(querytext, length_penalty)
-    
+
     # Run ER pipeline
     start_time = time.time()
     Filtered_Articles = []
@@ -97,16 +99,17 @@ if __name__ == "__main__":
 
     print(len(Filtered_Articles))
     if len(Filtered_Articles) == 0:
+        result = 'No Matching Article'
         print(f'NO MATCHING ARTICLES FOUND. NOT ENOUGH EVIDENCE!')
     else:
         # Run Fact Verification - Graph NET
-        graphNet = graphNetFC(cwd, device, feature_num, evidence_num, graph_layers, 
-                                num_class, graph_pool, sequence_length)
+        graphNet = graphNetFC(cwd, device, feature_num, evidence_num, graph_layers,
+                              num_class, graph_pool, sequence_length)
 
         FactVerification_List = []
         for i in range(len(Filtered_Articles)):
             pred_dict, outputs, heatmap = graphNet.predict(querytext, Filtered_Articles[i][1])
-        
+
             FactVerification_List.append(pred_dict['predicted_label'])
             print(pred_dict)
             print('[SUPPORTS, REFUTES, NOT ENOUGH INFO]')
@@ -122,14 +125,23 @@ if __name__ == "__main__":
             print(f'ARTICLE: {Filtered_Articles[i][2]} - {FactVerification_List[i]}')
             if FactVerification_List[i] == 'SUPPORTS':
                 maj_vote += 1
-        
-        if (maj_vote/len(Filtered_Articles)) > 0.6:
+
+        if (maj_vote / len(Filtered_Articles)) > 0.6:
             final_score = 'SUPPORTS'
             print(f'************** FINAL SCORE: SUPPORTS')
-        elif (maj_vote/len(Filtered_Articles)) == 0.5:
+        elif (maj_vote / len(Filtered_Articles)) == 0.5:
             final_score = 'NOT ENOUGH EVIDENCE'
             print(f'************** FINAL SCORE: NOT ENOUGH SUPPORTING EVIDENCE')
         else:
             final_score = 'REFUTES'
             print(f'************** FINAL SCORE: REFUTES')
-    
+
+        result = final_score
+
+    return result
+
+
+if __name__ == "__main__":
+    result = executePipeline(
+        'A bus driver has been arrested for careless driving following an accident at Loyang Avenue that killed a 31-year-old cyclist.')
+    print('Result is: ' + result)

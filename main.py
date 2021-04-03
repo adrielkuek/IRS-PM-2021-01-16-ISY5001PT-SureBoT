@@ -8,6 +8,7 @@ from transformers import pipeline
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import gdown
 import zipfile, os
+from SureBoT_main import executePipeline
 
 TIMEOUT = config.timeout
 TOKEN = config.token
@@ -18,32 +19,38 @@ MODEL_DOWNLOAD_URL = config.model_download_url
 MODEL_ZIP = config.model_zip
 MODEL_FOLDER = config.model_folder
 
+
 def handle_update(update):
     text = update["message"]["text"]
     chat = update["message"]["chat"]["id"]
-    items = db.get_items(chat)
-    if text == "/done":
-        keyboard = build_keyboard(items)
-        send_message("Select an item to delete", chat, keyboard)
-    elif text == "/start":
-        send_message("Welcome to your personal To Do list. Send any text to me and I'll store it as an item. Send "
-                     "/done to remove items", chat)
-        send_message("To Test Zero-Shot-Learning Classification Model with labels[misinformation, politics, "
-                     "health care], Send /classify with your text ", chat)
-    elif text.startswith("/classify"):
-        x = text.split("/classify ", 1)[1]
-        send_message(bertClassify(x), chat)
-    elif text.startswith("/"):
-        return
-    elif text in items:
-        db.delete_item(text, chat)
+    try:
         items = db.get_items(chat)
-        keyboard = build_keyboard(items)
-        send_message("Select an item to delete", chat, keyboard)
-    else:
-        db.add_item(text, chat)
-        items = db.get_items(chat)
-        message = "\n".join(items)
+        if text == "/done":
+            keyboard = build_keyboard(items)
+            send_message("Select an item to delete", chat, keyboard)
+        elif text == "/start":
+            send_message("Welcome to your personal To Do list. Send any text to me and I'll store it as an item. Send "
+                         "/done to remove items", chat)
+            send_message("To Test Zero-Shot-Learning Classification Model with labels[misinformation, politics, "
+                         "health care], Send /classify with your text ", chat)
+        elif text.startswith("/pipeline"):
+            x = text.split("/pipeline ", 1)[1]
+            send_message(executePipeline(x), chat)
+        elif text.startswith("/"):
+            return
+        elif text in items:
+            db.delete_item(text, chat)
+            items = db.get_items(chat)
+            keyboard = build_keyboard(items)
+            send_message("Select an item to delete", chat, keyboard)
+        else:
+            db.add_item(text, chat)
+            items = db.get_items(chat)
+            message = "\n".join(items)
+            send_message(message, chat)
+    except:
+        message = 'Exception occurred while processing'
+        print(message)
         send_message(message, chat)
 
 

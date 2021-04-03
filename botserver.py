@@ -24,7 +24,7 @@ def flaskHandler():
 def initCode():
     print('test is successful')
     setupDB()
-    initBERT()
+    # initBERT()
     downloadModels()
 
 
