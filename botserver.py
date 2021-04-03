@@ -37,7 +37,10 @@ def handle_update(update):
                          "health care], Send /classify with your text ", chat)
         elif text.startswith("/pipeline"):
             x = text.split("/pipeline ", 1)[1]
-            post_process(x, chat)
+            @main_app.after_this_response
+            def post_process():
+                send_message(executePipeline(x), chat)
+                print("after_response")
             send_message('Your query is being processed', chat)
         elif text.startswith("/"):
             return
@@ -48,12 +51,6 @@ def handle_update(update):
         message = 'Exception occurred while processing'
         print(message)
         send_message(message, chat)
-
-
-@main_app.after_this_response
-def post_process(query, chatId):
-    send_message(executePipeline(query), chatId)
-    print("after_response")
 
 
 if __name__ == '__main__':
