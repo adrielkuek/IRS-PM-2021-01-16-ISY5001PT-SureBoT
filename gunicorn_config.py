@@ -1,14 +1,16 @@
+import multiprocessing
+
 preload_app = True
 bind = '0.0.0.0:5000'
 backlog = 2048
 daemon = True
 capture_output = True
 
-workers = 1
-# worker_class = 'sync'
-# worker_connections = 1000
+workers = 2
+worker_class = 'sync'
+worker_connections = 1000
 # timeout = 30
-# keepalive = 2
+keepalive = 2
 
 errorlog = 'error.log'
 loglevel = 'debug'
@@ -17,6 +19,8 @@ accesslog = 'access.log'
 
 def on_starting(server):
     print("Gunicorn on_starting method is executed")
+    print("Workers ", multiprocessing.cpu_count() * 2 + 1)
+    print("No of CPU ", multiprocessing.cpu_count())
 
 
 def post_fork(server, worker):
