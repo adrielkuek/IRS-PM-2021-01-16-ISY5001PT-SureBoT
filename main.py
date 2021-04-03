@@ -36,7 +36,6 @@ def handle_update(update):
                          "health care], Send /classify with your text ", chat)
         elif text.startswith("/pipeline"):
             x = text.split("/pipeline ", 1)[1]
-            Thread(target=start_pipeline(x)).start()
             send_message('Your query is being processed', chat)
         elif text.startswith("/"):
             return
@@ -54,13 +53,6 @@ def handle_update(update):
         message = 'Exception occurred while processing'
         print(message)
         send_message(message, chat)
-
-
-def start_pipeline(x, chat):
-    print('Pipeline has started executing')
-    send_message(executePipeline(x), chat)
-    print('Pipeline finished executing')
-    return
 
 
 def build_keyboard(items):
@@ -131,3 +123,8 @@ def bertClassify(sequences):
     results = nlpClassify(sequences=sequences, candidate_labels=LABELS, multi_class=False)
     resultStr = json.dumps(results)
     return resultStr
+
+
+if __name__ == "__main__":
+    print('Starting thread')
+    Thread(target=start_pipeline(x)).start()
