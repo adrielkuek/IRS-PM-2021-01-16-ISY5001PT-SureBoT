@@ -41,11 +41,11 @@ def handle_update(update):
             def post_process():
                 send_message(executePipeline(x), chat)
                 print("after_response")
-            send_message('Your query is being processed', chat)
+            send_message('Your query is being processed.....', chat)
         elif text.startswith("/"):
             return
         else:
-            message = "The message entered is ".join(text)
+            message = "The message entered is " + text
             send_message(message, chat)
     except:
         message = 'Exception occurred while processing'
