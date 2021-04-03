@@ -111,21 +111,6 @@ def downloadModels():
         print("Models were not downloaded")
 
 
-
-    url = 'https://drive.google.com/uc?id=14cNpXSCiN0Wv1rcQYOjyzmty3RqOQYwC'
-    output = 'pipeline_models.zip'
-    gdown.download(url, output, quiet=False)
-
-    print("Creating zip file object")
-    zip_ref = zipfile.ZipFile(output)  # createzipfileobject
-    print("Extracting files to directory")
-    zip_ref.extractall()  # extractfiletodir
-    print("Closing file")
-    zip_ref.close()  # closefile
-    print("Creating zip file object")
-    os.remove(output)  # deletezippedfile
-
-
 def bertClassify(sequences):
     results = nlpClassify(sequences=sequences, candidate_labels=LABELS, multi_class=False)
     resultStr = json.dumps(results)
