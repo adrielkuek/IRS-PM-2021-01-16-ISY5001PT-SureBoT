@@ -2,6 +2,7 @@ preload_app = True
 bind = '0.0.0.0:5000'
 backlog = 2048
 daemon = True
+capture_output = True
 
 workers = 1
 # worker_class = 'sync'
@@ -12,6 +13,10 @@ workers = 1
 errorlog = 'error.log'
 loglevel = 'debug'
 accesslog = 'access.log'
+
+
+def on_starting(server):
+    print("Gunicorn on_starting method is executed")
 
 
 def post_fork(server, worker):
