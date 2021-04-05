@@ -48,14 +48,14 @@ class EvidenceRetrieval(object):
         PegasusModel_dir = self.filepath  + '/pipeline_models/models/pegasus-cnn_dailymail'
         self.PegasusTokenizer = PegasusTokenizer.from_pretrained(PegasusModel_dir)
         self.PegasusModel = PegasusForConditionalGeneration.from_pretrained(PegasusModel_dir).to(self.device)
-        print('\n*******PEGASUS TOKENIZER AND MODEL LOADED*******')
-        print(f'LOADING SENTENCE-BERT MODEL . . .')
+        #print('\n*******PEGASUS TOKENIZER AND MODEL LOADED*******')
+        #print(f'LOADING SENTENCE-BERT MODEL . . .')
         # SentenceModel_dir = self.filepath + '/pipeline_models/models/stsb-distilbert-base'
         SentenceModel_dir = self.filepath + '/pipeline_models/models/msmarco-distilroberta-base-v2'
         self.sentenceTokenizer = AutoTokenizer.from_pretrained(SentenceModel_dir)
         self.sentenceBERT = AutoModel.from_pretrained(SentenceModel_dir)
-        print('\n*******DISTILROBERTA MODEL LOADED*******')
-        print(f'>>>>>>> TIME TAKEN - MODELS LOADING: {time.time() - start_time}')
+        #print('\n*******DISTILROBERTA MODEL LOADED*******')
+        #print(f'>>>>>>> TIME TAKEN - MODELS LOADING: {time.time() - start_time}')
 
     def AbstractiveSummary(self, input_text, length_penalty):
         start_time = time.time()
@@ -108,7 +108,7 @@ class EvidenceRetrieval(object):
             similarityscore = util.pytorch_cos_sim(query_embedding, article_embedding)
             similaritylist.append(similarityscore.detach().cpu().numpy())
 
-        print(f'SIMILARITY LIST SCORES: {similaritylist}')
+        #print(f'SIMILARITY LIST SCORES: {similaritylist}')
 
         #####################################################
         # Filter Relevant Articles - Distance Threshold > 0.4
@@ -135,7 +135,7 @@ class EvidenceRetrieval(object):
         with torch.no_grad():
             model_output = self.sentenceBERT(**encoded_input)
         sentence_embeddings = self.mean_pooling(model_output, encoded_input['attention_mask'])
-        print(f'>>>>>>> TIME TAKEN - SEMANTIC COMPARISON: {time.time() - start_time}')
+        #print(f'>>>>>>> TIME TAKEN - SEMANTIC COMPARISON: {time.time() - start_time}')
         return sentence_embeddings
 
     #Mean Pooling - Take attention mask into account for correct averaging
@@ -149,14 +149,14 @@ class EvidenceRetrieval(object):
 def main():
 
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-    print(f'DEVICE Available: {device}')
+    #print(f'DEVICE Available: {device}')
 
     #####################################################
     # Initialization
     #####################################################
     start = time.time()
     cwd = os.path.dirname(os.path.realpath(__file__))
-    print(f'INITIALISE EVIDENCE RETRIEVAL PIPELINE . . .')
+    #print(f'INITIALISE EVIDENCE RETRIEVAL PIPELINE . . .')
     ER_pipeline = EvidenceRetrieval(cwd, device)
     
     ################# SAMPLE QUERIES/URLS #####################
@@ -167,7 +167,7 @@ def main():
     # query = "https://www.theonlinecitizen.com/2020/07/03/10-mil-population-debacle-sdp-questions-why-former-dpm-heng-did-not-refute-st-report-at-the-time-it-was-published/"
     # query = "https://newnaratif.com/podcast/an-interview-with-dr-paul-tambyah/"
     # query = "https://www.straitstimes.com/tech/tech-news/whatsapp-delays-data-sharing-change-after-backlash-sees-users-flock-to-rivals"
-    print(f'INPUT QUERY: {query}')
+    #print(f'INPUT QUERY: {query}')
 
     # Check URL Validity
     headers = {'user-agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.835.163 Safari/535.1'}
@@ -184,7 +184,7 @@ def main():
     for token in myDoc:
         sentenceToken.append(token.text)
 
-    print(f'TOTAL NO. OF TOKENS FROM QUERY: {len(sentenceToken)}')
+    #print(f'TOTAL NO. OF TOKENS FROM QUERY: {len(sentenceToken)}')
 
     # If tokens > 50 - Perform Abstractive Summary on Query
     # Else just skip and perform Doc Retrieval
@@ -195,7 +195,7 @@ def main():
     start_time = time.time()
     Filtered_Articles = []
     Filtered_Articles = ER_pipeline.RetrieveArticles(querytext, topN)
-    print(f'>>>>>>> TIME TAKEN - ER PIPELINE: {time.time() - start_time}')
+    #print(f'>>>>>>> TIME TAKEN - ER PIPELINE: {time.time() - start_time}')
 
 if __name__ == "__main__":
     main()
