@@ -29,17 +29,20 @@ def initCode():
 
 
 def handle_update(update):
+    chat = update["message"]["chat"]["id"]
     try:
         if "message" in update:
-            text = update["message"]["text"]
-            chat = update["message"]["chat"]["id"]
-            if text == "/start":
-                send_message("Do you need to fact check any message? Copy and paste it in the chat and we will do the work for you!!", chat)
-            elif text.startswith("/"):
-                return
+            if "text" in update["message"]:
+                text = update["message"]["text"]
+                if text == "/start":
+                    send_message("Do you need to fact check any message? Copy and paste it in the chat and we will do the work for you!!", chat)
+                elif text.startswith("/"):
+                    return
+                else:
+                    output = '*Do you want to fact check below message?*\n\n' + text
+                    send_message(output, chat, build_inline_keyboard(text))
             else:
-                output = '*Do you want to fact check below message?*\n\n' + text
-                send_message(output, chat, build_inline_keyboard(text))
+                send_message("Please send only text messages.", chat)
         elif "callback_query" in update:
             callback_query_id = update["callback_query"]["id"]
             data = update["callback_query"]["data"]
