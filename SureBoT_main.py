@@ -27,6 +27,8 @@ import validators
 import torch
 import matplotlib.pyplot as plt
 import seaborn as sns
+import re
+import emoji
 
 from EvidenceRetrieval import EvidenceRetrieval
 from GraphNetFC import graphNetFC
@@ -67,9 +69,12 @@ def executePipeline(query):
     # query = "https://www.theonlinecitizen.com/2020/07/03/10-mil-population-debacle-sdp-questions-why-former-dpm-heng-did-not-refute-st-report-at-the-time-it-was-published/"
     # query = "https://newnaratif.com/podcast/an-interview-with-dr-paul-tambyah/"
     # query = "https://www.straitstimes.com/tech/tech-news/whatsapp-delays-data-sharing-change-after-backlash-sees-users-flock-to-rivals"
-    print(f'INPUT QUERY: {query}')
+
+    # Commenting below statement because of UnicodeEncodeError when Emoji's are present
+    # print(f'INPUT QUERY: {query}')
 
     # Check URL Validity
+    '''
     headers = {
         'user-agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.835.163 Safari/535.1'}
     query_urlstatus = validators.url(query)
@@ -77,6 +82,9 @@ def executePipeline(query):
         querytext = fulltext(requests.get(query, headers=headers).text)
     else:
         querytext = query
+    '''
+    # Query Preprocessing
+    querytext = query_preprocessing(query)
 
     # Use SPACY to get number of tokens
     nlp = English()
@@ -86,6 +94,7 @@ def executePipeline(query):
         sentenceToken.append(token.text)
 
     print(f'TOTAL NO. OF TOKENS FROM QUERY: {len(sentenceToken)}')
+    print(sentenceToken)
 
     # If tokens > 50 - Perform Abstractive Summary on Query
     # Else just skip and perform Doc Retrieval
@@ -146,7 +155,41 @@ def executePipeline(query):
     return output_message
 
 
+def remove_emoji(text):
+    return emoji.get_emoji_regexp().sub(u'', text)
+
+
+def query_preprocessing(query):
+    # Remove all EMOJI's from query
+    query = query.encode('utf-16', 'surrogatepass').decode('utf-16')
+    query = remove_emoji(query)
+
+    # Extract all URL's and replace them with the text in the URL
+    link_regex = re.compile('(?P<url>https?://[^\s]+)', re.DOTALL)
+    links = re.findall(link_regex, query)
+
+    for link in links:
+        # Check URL Validity
+        try:
+            headers = {
+                'user-agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.835.163 Safari/535.1'}
+            query_urlstatus = validators.url(link)
+            if query_urlstatus:
+                url_text = fulltext(requests.get(link, headers=headers).text)
+            else:
+                url_text = link
+            query = query.replace(link, url_text)
+        except:
+            print('Exception when extracting full text from URL')
+
+    # Need to check if replacing of special characters is necessary for pegasus model
+    # query = re.sub("[\n!@#$%^&*()\[\]{};:/<>?|`~\-=_+\t]", " ", query)
+    # query = re.sub("\n", " ", query)
+    return query
+
+
 if __name__ == "__main__":
-    result = executePipeline(
-        'A bus driver has been arrested for careless driving following an accident at Loyang Avenue that killed a 31-year-old cyclist.')
+    text = "\ud83d\udc4d\ud83d\ude4c()Indeed,  Vivian Balakrishnan is a world class leader and politician. Establish Singapore very well on the world map.\ud83d\udc4f\ud83e\udd42\n\nhttps://newnaratif.com/podcast/an-interview-with-dr-paul-tambyah/"
+    result = executePipeline(text)
+    result = result.encode('utf-16', 'surrogatepass').decode('utf-16')
     print('Result is: ' + result)
