@@ -63,4 +63,5 @@ def handle_update(update):
 
 
 if __name__ == '__main__':
-    main_app.run(debug=True, host='0.0.0.0', port=5000)
+    print('Main is called')
+    main_app.run(debug=False, host='0.0.0.0', port=5000, use_reloader=False)
