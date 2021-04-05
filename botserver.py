@@ -31,9 +31,9 @@ def initCode():
 def handle_update(update):
     try:
         if "message" in update:
+            chat = update["message"]["chat"]["id"]
             if "text" in update["message"]:
                 text = update["message"]["text"]
-                chat = update["message"]["chat"]["id"]
                 if text == "/start":
                     send_message("Do you need to fact check any message? Copy and paste it in the chat and we will do the work for you!!", chat)
                 elif text.startswith("/"):
