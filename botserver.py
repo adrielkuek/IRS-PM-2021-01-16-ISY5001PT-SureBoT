@@ -29,11 +29,11 @@ def initCode():
 
 
 def handle_update(update):
-    chat = update["message"]["chat"]["id"]
     try:
         if "message" in update:
             if "text" in update["message"]:
                 text = update["message"]["text"]
+                chat = update["message"]["chat"]["id"]
                 if text == "/start":
                     send_message("Do you need to fact check any message? Copy and paste it in the chat and we will do the work for you!!", chat)
                 elif text.startswith("/"):
@@ -62,7 +62,8 @@ def handle_update(update):
     except:
         message = 'Exception occurred while processing'
         print(message)
-        send_message(message, chat)
+        if chat:
+            send_message(message, chat)
 
 
 if __name__ == '__main__':
