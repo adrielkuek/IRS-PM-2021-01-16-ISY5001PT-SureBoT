@@ -38,17 +38,24 @@ def handle_update(update):
             elif text.startswith("/"):
                 return
             else:
-                output = 'Do you want to fact check below message?\n\n' + text
+                output = '*Do you want to fact check below message?*\n\n' + text
                 send_message(output, chat, build_inline_keyboard(text))
         elif "callback_query" in update:
             callback_query_id = update["callback_query"]["id"]
             data = update["callback_query"]["data"]
             chat = update["callback_query"]["message"]["chat"]["id"]
-            @main_app.after_this_response
-            def post_process():
-                send_message(executePipeline(data), chat)
-                print("after_response")
-            answer_callback_query(callback_query_id, "Your query is being processed.....")
+            text = update["callback_query"]["message"]["text"]
+            x = text.split("Do you want to fact check below message?\n\n", 1)[1]
+            if data == 'YES':
+                @main_app.after_this_response
+                def post_process():
+                    send_message(executePipeline(x), chat)
+                    print("After pipeline execution")
+
+                answer_callback_query(callback_query_id, "Your query is being processed.....")
+            else:
+                answer_callback_query(callback_query_id, "Please click Yes if you want your message to be fact checked.")
+
     except:
         message = 'Exception occurred while processing'
         print(message)

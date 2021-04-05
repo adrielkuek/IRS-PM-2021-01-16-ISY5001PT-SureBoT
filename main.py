@@ -28,7 +28,7 @@ def build_keyboard(items):
 
 
 def build_inline_keyboard(query):
-    reply_markup = {"inline_keyboard": [[{"text": "Yes", "callback_data": query},{"text": "No", "callback_data": "No button clicked"}]]}
+    reply_markup = {"inline_keyboard": [[{"text": "Yes", "callback_data": "YES"},{"text": "No", "callback_data": "NO"}]]}
     return json.dumps(reply_markup)
 
 
