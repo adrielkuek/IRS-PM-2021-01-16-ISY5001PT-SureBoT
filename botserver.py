@@ -78,7 +78,7 @@ def handle_update(update):
             send_message(message, chat)
 
 
-@celery.task(name='botserver.post_process', bind=True)
+@celery.task(name='botserver.post_process')
 def post_process(query, chat):
     print('Going to execute pipeline')
     query_result = executePipeline(query)
