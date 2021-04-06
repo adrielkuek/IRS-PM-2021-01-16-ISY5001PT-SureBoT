@@ -1,12 +1,15 @@
 from flask import Flask
 from flask import request
 import json
+
+from flask_celery import make_celery
 from main import setupDB, downloadModels, send_message, build_inline_keyboard, answer_callback_query
 from AfterResponseMiddleware import AfterThisResponse
 from SureBoT_main import executePipeline
 
 main_app = Flask(__name__, static_url_path='/static')
 AfterThisResponse(main_app)
+celery = make_celery(main_app)
 
 
 @main_app.route('/', methods=["POST", "GET"])
@@ -35,7 +38,9 @@ def handle_update(update):
             if "text" in update["message"]:
                 text = update["message"]["text"]
                 if text == "/start":
-                    send_message("Do you need to fact check any message? Copy and paste it in the chat and we will do the work for you!!", chat)
+                    send_message(
+                        "Do you need to fact check any message? Copy and paste it in the chat and we will do the work for you!!",
+                        chat)
                 elif text.startswith("/"):
                     return
                 else:
@@ -50,20 +55,33 @@ def handle_update(update):
             text = update["callback_query"]["message"]["text"]
             x = text.split("Do you want to fact check below message?\n\n", 1)[1]
             if data == 'YES':
+                '''
                 @main_app.after_this_response
                 def post_process():
                     send_message(executePipeline(x), chat)
                     print("After pipeline execution")
-
+                '''
+                job = post_process.delay(x, chat)
+                print('The job id is: ' + job.id)
                 answer_callback_query(callback_query_id, "Your query is being processed.....")
             else:
-                answer_callback_query(callback_query_id, "Please click Yes if you want your message to be fact checked.")
+                answer_callback_query(callback_query_id,
+                                      "Please click Yes if you want your message to be fact checked.")
 
     except:
         message = 'Exception occurred while processing'
         print(message)
         if chat:
             send_message(message, chat)
+
+
+@celery.task(name='botserver.post_process', bind=True)
+def post_process(query, chat):
+    query_result = executePipeline(query)
+    print("Query result obtained")
+    with main_app.app_context():
+        send_message(query_result, chat)
+        print("After pipeline execution")
 
 
 if __name__ == '__main__':
