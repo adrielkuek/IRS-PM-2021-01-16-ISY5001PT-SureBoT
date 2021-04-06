@@ -3,7 +3,7 @@ import multiprocessing
 preload_app = True
 bind = '0.0.0.0:5000'
 backlog = 2048
-daemon = True
+daemon = False
 capture_output = True
 
 workers = 2

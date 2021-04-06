@@ -54,6 +54,7 @@ def handle_update(update):
             chat = update["callback_query"]["message"]["chat"]["id"]
             text = update["callback_query"]["message"]["text"]
             x = text.split("Do you want to fact check below message?\n\n", 1)[1]
+            print("Split text is: " + x)
             if data == 'YES':
                 '''
                 @main_app.after_this_response
@@ -61,6 +62,7 @@ def handle_update(update):
                     send_message(executePipeline(x), chat)
                     print("After pipeline execution")
                 '''
+                print('user choice is yes, starting post process')
                 job = post_process.delay(x, chat)
                 print('The job id is: ' + job.id)
                 answer_callback_query(callback_query_id, "Your query is being processed.....")
@@ -68,15 +70,17 @@ def handle_update(update):
                 answer_callback_query(callback_query_id,
                                       "Please click Yes if you want your message to be fact checked.")
 
-    except:
+    except Exception as e:
         message = 'Exception occurred while processing'
         print(message)
+        print(e)
         if chat:
             send_message(message, chat)
 
 
 @celery.task(name='botserver.post_process', bind=True)
 def post_process(query, chat):
+    print('Going to execute pipeline')
     query_result = executePipeline(query)
     print("Query result obtained")
     with main_app.app_context():
