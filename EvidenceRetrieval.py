@@ -46,14 +46,21 @@ class EvidenceRetrieval(object):
         start_time = time.time()
         print(f'LOADING PEGASUS MODEL . . .')
         PegasusModel_dir = self.filepath  + '/pipeline_models/models/pegasus-cnn_dailymail'
+        print(f'TIME TAKEN - Pegasus Model directory: {time.time() - start_time}')
+        start_time = time.time()
         self.PegasusTokenizer = PegasusTokenizer.from_pretrained(PegasusModel_dir)
+        print(f'TIME TAKEN - Pegasus Tokenizer: {time.time() - start_time}')
+        start_time = time.time()
         self.PegasusModel = PegasusForConditionalGeneration.from_pretrained(PegasusModel_dir).to(self.device)
+        print(f'TIME TAKEN - Pegasus Conditional generation: {time.time() - start_time}')
         #print('\n*******PEGASUS TOKENIZER AND MODEL LOADED*******')
         #print(f'LOADING SENTENCE-BERT MODEL . . .')
         # SentenceModel_dir = self.filepath + '/pipeline_models/models/stsb-distilbert-base'
+        start_time = time.time()
         SentenceModel_dir = self.filepath + '/pipeline_models/models/msmarco-distilroberta-base-v2'
         self.sentenceTokenizer = AutoTokenizer.from_pretrained(SentenceModel_dir)
         self.sentenceBERT = AutoModel.from_pretrained(SentenceModel_dir)
+        print(f'TIME TAKEN - MSMarco Distil roberta: {time.time() - start_time}')
         #print('\n*******DISTILROBERTA MODEL LOADED*******')
         #print(f'>>>>>>> TIME TAKEN - MODELS LOADING: {time.time() - start_time}')
 
@@ -62,10 +69,10 @@ class EvidenceRetrieval(object):
         batch = self.PegasusTokenizer(input_text, truncation=True, padding='longest', return_tensors="pt").to(self.device)
         translated = self.PegasusModel.generate(**batch, length_penalty=length_penalty)
         summary = self.PegasusTokenizer.batch_decode(translated, skip_special_tokens=True)
-        print('\n******************************************')
+        #print('\n******************************************')
         summary = "".join(summary)
-        print(summary)
-        print(f'>>>>>>> TIME TAKEN - ABSTRACTIVE SUMMARY: {time.time() - start_time}')
+        #print(summary)
+        #print(f'>>>>>>> TIME TAKEN - ABSTRACTIVE SUMMARY: {time.time() - start_time}')
         return summary
 
     def RetrieveArticles(self, input_text, topN):
@@ -79,7 +86,7 @@ class EvidenceRetrieval(object):
         for article_num in range(len(search["entries"])):
             article_info = search["entries"][article_num]["links"]
             articleurls.append(article_info[-1]["href"])
-        print(f'\n******* Found No. of articles = {len(articleurls)} *******')
+        #print(f'\n******* Found No. of articles = {len(articleurls)} *******')
 
         # Summarize the article (take TopN where N is number of articles)
         for article_url in articleurls[:topN]:
@@ -89,7 +96,7 @@ class EvidenceRetrieval(object):
                 #************************#
                 # RUN PEGASUS
                 #************************#
-                print(f'PERFORMING ABSTRACTION - ARTICLE: {article_url} . . .')
+                #print(f'PERFORMING ABSTRACTION - ARTICLE: {article_url} . . .')
                 articlesummary = self.AbstractiveSummary(articletext, length_penalty)
                 articlesummarylist.append("".join(articlesummary))
 
@@ -117,7 +124,7 @@ class EvidenceRetrieval(object):
         filteredarticles = [[article[0], article[1].split(sep="<n>"), article[2]] 
                                 for article in articlesimilarity if article[0] > dist_thres]
         
-        pprint(filteredarticles)
+        #pprint(filteredarticles)
 
         # Output to excel/csv file [Optional]
         # df = pd.DataFrame(filteredarticles, columns=["Score", "Summarized Content", "URL"])
