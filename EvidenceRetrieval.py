@@ -36,7 +36,7 @@ max_length = 128
 dist_thres = 0.4
 
 class EvidenceRetrieval(object):
-    def __init__(self, filepath, device):
+    def __init__(self, filepath, device, pegasus):
         self.device = device
         self.filepath = filepath
         # Initialise GoogleNews API
@@ -52,7 +52,7 @@ class EvidenceRetrieval(object):
         self.PegasusTokenizer = PegasusTokenizer.from_pretrained(PegasusModel_dir)
         print(f'TIME TAKEN - Pegasus Tokenizer: {time.time() - start_time}')
         start_time = time.time()
-        self.PegasusModel = PegasusForConditionalGeneration.from_pretrained(PegasusModel_dir).to(self.device)
+        self.PegasusModel = pegasus.to(self.device)
         print(f'TIME TAKEN - Pegasus Conditional generation: {time.time() - start_time}')
         #print('\n*******PEGASUS TOKENIZER AND MODEL LOADED*******')
         #print(f'LOADING SENTENCE-BERT MODEL . . .')
@@ -207,13 +207,16 @@ def main():
     print(f'>>>>>>> TIME TAKEN - ER PIPELINE: {time.time() - start_time}')
 
 
-if __name__ == "__main__":
-    main()
-
-
 def loadPretrainedModels():
     start_time = time.time()
     cwd = os.path.dirname(os.path.realpath(__file__))
     PegasusModel_dir = cwd + '/pipeline_models/models/pegasus-cnn_dailymail'
     ModelsReference.PEGASUS_MODEL = PegasusForConditionalGeneration.from_pretrained(PegasusModel_dir)
     print(f'>>>>>>> TIME TAKEN - SEMANTIC COMPARISON: {time.time() - start_time}')
+
+
+if __name__ == "__main__":
+    loadPretrainedModels()
+    main()
+
+

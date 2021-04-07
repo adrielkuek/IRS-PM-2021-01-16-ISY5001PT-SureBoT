@@ -30,8 +30,9 @@ import seaborn as sns
 import re
 import emoji
 
-from EvidenceRetrieval import EvidenceRetrieval
+from EvidenceRetrieval import EvidenceRetrieval, loadPretrainedModels
 from GraphNetFC import graphNetFC
+import ModelsReference
 
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 print(f'DEVICE Available: {device}')
@@ -59,7 +60,8 @@ def executePipeline(query):
         start = time.time()
         cwd = os.path.dirname(os.path.realpath(__file__))
         print(f'INITIALISE EVIDENCE RETRIEVAL PIPELINE . . .')
-        ER_pipeline = EvidenceRetrieval(cwd, device)
+        loadPretrainedModels()
+        ER_pipeline = EvidenceRetrieval(cwd, device, ModelsReference.PEGASUS_MODEL)
 
         output_message = "*FACT-CHECK:* " + query
         ################# SAMPLE QUERIES/URLS #####################
@@ -152,8 +154,10 @@ def executePipeline(query):
                 output_message += '\n\n\n' + Filtered_Articles[i][2] + '\n\n'
                 for j in range(len(Filtered_Articles[i][1])):
                     output_message += Filtered_Articles[i][1][j]
-    except:
+    except Exception as e:
         output_message = 'Exception occurred in pipeline'
+        print('Exception occurred')
+        print(e)
 
     return output_message
 
