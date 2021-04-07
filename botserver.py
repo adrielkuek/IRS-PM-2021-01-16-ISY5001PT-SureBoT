@@ -70,7 +70,7 @@ def handle_update(update):
                     print("After pipeline execution")
                 '''
                 print('user choice is yes, starting post process')
-                job = post_process.delay(x, chat)
+                job = post_process.delay(x, chat, ModelsReference.PEGASUS_MODEL)
                 print('The job id is: ' + job.id)
                 answer_callback_query(callback_query_id, "Your query is being processed.....")
             else:
@@ -86,9 +86,9 @@ def handle_update(update):
 
 
 @celery.task(name='botserver.post_process')
-def post_process(query, chat):
+def post_process(query, chat, pegasusModel):
     print('Going to execute pipeline')
-    query_result = executePipeline(query)
+    query_result = executePipeline(query, pegasusModel)
     print("Query result obtained")
     with main_app.app_context():
         send_message(query_result, chat)

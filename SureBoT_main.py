@@ -32,7 +32,6 @@ import emoji
 
 from EvidenceRetrieval import EvidenceRetrieval, loadPretrainedModels
 from GraphNetFC import graphNetFC
-import ModelsReference
 
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 print(f'DEVICE Available: {device}')
@@ -52,7 +51,7 @@ sequence_length = 128
 graph_pool = 'att'
 
 
-def executePipeline(query):
+def executePipeline(query, pegasusModel):
     #####################################################
     # Initialization
     #####################################################
@@ -60,8 +59,7 @@ def executePipeline(query):
         start = time.time()
         cwd = os.path.dirname(os.path.realpath(__file__))
         print(f'INITIALISE EVIDENCE RETRIEVAL PIPELINE . . .')
-        loadPretrainedModels()
-        ER_pipeline = EvidenceRetrieval(cwd, device, ModelsReference.PEGASUS_MODEL)
+        ER_pipeline = EvidenceRetrieval(cwd, device, pegasusModel)
 
         output_message = "*FACT-CHECK:* " + query
         ################# SAMPLE QUERIES/URLS #####################
@@ -196,6 +194,7 @@ def query_preprocessing(query):
 
 
 if __name__ == "__main__":
+    loadPretrainedModels()
     text = "https://www.straitstimes.com/singapore/all-adult-sporeans-to-get-100-tourism-vouchers-in-december-for-staycations-attractions-and"
     result = executePipeline(text)
     result = result.encode('utf-16', 'surrogatepass').decode('utf-16')
