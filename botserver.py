@@ -1,6 +1,8 @@
 from flask import Flask
 from flask import request
 import json
+import ModelsReference
+from EvidenceRetrieval import loadPretrainedModels
 
 from flask_celery import make_celery
 from main import setupDB, downloadModels, send_message, build_inline_keyboard, answer_callback_query
@@ -29,6 +31,11 @@ def initCode():
     setupDB()
     # initBERT()
     downloadModels()
+    loadModels()
+
+
+def loadModels():
+    loadPretrainedModels()
 
 
 def handle_update(update):

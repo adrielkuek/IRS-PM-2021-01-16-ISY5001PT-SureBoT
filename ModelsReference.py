@@ -1,0 +1,2 @@
+global PEGASUS_MODEL
+global MSMARCO_MODEL

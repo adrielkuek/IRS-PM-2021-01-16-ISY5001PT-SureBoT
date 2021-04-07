@@ -27,6 +27,7 @@ from spacy.lang.en import English
 from pprint import pprint
 import validators
 import torch
+import ModelsReference
 
 # Params
 length_penalty = 1.5
@@ -72,7 +73,7 @@ class EvidenceRetrieval(object):
         #print('\n******************************************')
         summary = "".join(summary)
         #print(summary)
-        #print(f'>>>>>>> TIME TAKEN - ABSTRACTIVE SUMMARY: {time.time() - start_time}')
+        print(f'>>>>>>> TIME TAKEN - ABSTRACTIVE SUMMARY: {time.time() - start_time}')
         return summary
 
     def RetrieveArticles(self, input_text, topN):
@@ -86,7 +87,7 @@ class EvidenceRetrieval(object):
         for article_num in range(len(search["entries"])):
             article_info = search["entries"][article_num]["links"]
             articleurls.append(article_info[-1]["href"])
-        #print(f'\n******* Found No. of articles = {len(articleurls)} *******')
+        print(f'\n******* Found No. of articles = {len(articleurls)} *******')
 
         # Summarize the article (take TopN where N is number of articles)
         for article_url in articleurls[:topN]:
@@ -142,7 +143,7 @@ class EvidenceRetrieval(object):
         with torch.no_grad():
             model_output = self.sentenceBERT(**encoded_input)
         sentence_embeddings = self.mean_pooling(model_output, encoded_input['attention_mask'])
-        #print(f'>>>>>>> TIME TAKEN - SEMANTIC COMPARISON: {time.time() - start_time}')
+        print(f'>>>>>>> TIME TAKEN - SEMANTIC COMPARISON: {time.time() - start_time}')
         return sentence_embeddings
 
     #Mean Pooling - Take attention mask into account for correct averaging
@@ -152,6 +153,7 @@ class EvidenceRetrieval(object):
         sum_embeddings = torch.sum(token_embeddings * input_mask_expanded, 1)
         sum_mask = torch.clamp(input_mask_expanded.sum(1), min=1e-9)
         return sum_embeddings / sum_mask
+
 
 def main():
 
@@ -174,7 +176,7 @@ def main():
     # query = "https://www.theonlinecitizen.com/2020/07/03/10-mil-population-debacle-sdp-questions-why-former-dpm-heng-did-not-refute-st-report-at-the-time-it-was-published/"
     # query = "https://newnaratif.com/podcast/an-interview-with-dr-paul-tambyah/"
     # query = "https://www.straitstimes.com/tech/tech-news/whatsapp-delays-data-sharing-change-after-backlash-sees-users-flock-to-rivals"
-    #print(f'INPUT QUERY: {query}')
+    print(f'INPUT QUERY: {query}')
 
     # Check URL Validity
     headers = {'user-agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.835.163 Safari/535.1'}
@@ -202,7 +204,16 @@ def main():
     start_time = time.time()
     Filtered_Articles = []
     Filtered_Articles = ER_pipeline.RetrieveArticles(querytext, topN)
-    #print(f'>>>>>>> TIME TAKEN - ER PIPELINE: {time.time() - start_time}')
+    print(f'>>>>>>> TIME TAKEN - ER PIPELINE: {time.time() - start_time}')
+
 
 if __name__ == "__main__":
     main()
+
+
+def loadPretrainedModels():
+    start_time = time.time()
+    cwd = os.path.dirname(os.path.realpath(__file__))
+    PegasusModel_dir = cwd + '/pipeline_models/models/pegasus-cnn_dailymail'
+    ModelsReference.PEGASUS_MODEL = PegasusForConditionalGeneration.from_pretrained(PegasusModel_dir)
+    print(f'>>>>>>> TIME TAKEN - SEMANTIC COMPARISON: {time.time() - start_time}')
