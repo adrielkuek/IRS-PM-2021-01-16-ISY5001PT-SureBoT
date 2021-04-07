@@ -8,7 +8,7 @@ Status: Devlopment
 Description:
 SureBo(T) is an end to end automatec fact-checking BOT based on
 TELEGRAM API that retrieves multi document inputs for fact
-verification based on a single input query. The input query currently 
+verification based on a single input query. The input query currently
 takes the form of a text message that is dubious in content.
 
 In fulfilment of the requirements for the Intelligent Reasoning Systems
@@ -94,8 +94,8 @@ def executePipeline(query):
         for token in myDoc:
             sentenceToken.append(token.text)
 
-        #print(f'TOTAL NO. OF TOKENS FROM QUERY: {len(sentenceToken)}')
-        #print(sentenceToken)
+        print(f'TOTAL NO. OF TOKENS FROM QUERY: {len(sentenceToken)}')
+        print(sentenceToken)
 
         # If tokens > 50 - Perform Abstractive Summary on Query
         # Else just skip and perform Doc Retrieval
@@ -106,12 +106,12 @@ def executePipeline(query):
         start_time = time.time()
         Filtered_Articles = []
         Filtered_Articles = ER_pipeline.RetrieveArticles(querytext, topN)
-        #print(f'>>>>>>> TIME TAKEN - ER PIPELINE: {time.time() - start_time}')
+        print(f'>>>>>>> TIME TAKEN - ER PIPELINE: {time.time() - start_time}')
 
-        #print(len(Filtered_Articles))
+        print(len(Filtered_Articles))
         if len(Filtered_Articles) == 0:
             output_message += '\n\nNO MATCHING ARTICLES FOUND. NOT ENOUGH EVIDENCE!'
-            #print(f'NO MATCHING ARTICLES FOUND. NOT ENOUGH EVIDENCE!')
+            print(f'NO MATCHING ARTICLES FOUND. NOT ENOUGH EVIDENCE!')
         else:
             # Run Fact Verification - Graph NET
             graphNet = graphNetFC(cwd, device, feature_num, evidence_num, graph_layers,
@@ -122,9 +122,9 @@ def executePipeline(query):
                 pred_dict, outputs, heatmap = graphNet.predict(querytext, Filtered_Articles[i][1])
 
                 FactVerification_List.append(pred_dict['predicted_label'])
-                #print(pred_dict)
-                #print('[SUPPORTS, REFUTES, NOT ENOUGH INFO]')
-                #print((np.array(outputs)))
+                print(pred_dict)
+                print('[SUPPORTS, REFUTES, NOT ENOUGH INFO]')
+                print((np.array(outputs)))
 
                 # Plot Attention Heat map to visualize
                 # ax = sns.heatmap(heatmap, linewidth=1.0, cmap="YlGnBu")
@@ -133,19 +133,19 @@ def executePipeline(query):
 
             maj_vote = 0
             for i in range(len(Filtered_Articles)):
-                #print(f'ARTICLE: {Filtered_Articles[i][2]} - {FactVerification_List[i]}')
+                print(f'ARTICLE: {Filtered_Articles[i][2]} - {FactVerification_List[i]}')
                 if FactVerification_List[i] == 'SUPPORTS':
                     maj_vote += 1
 
             if (maj_vote / len(Filtered_Articles)) > 0.6:
                 final_score = 'SUPPORTS'
-                #print(f'************** FINAL SCORE: SUPPORTS')
+                print(f'************** FINAL SCORE: SUPPORTS')
             elif (maj_vote / len(Filtered_Articles)) == 0.5:
                 final_score = 'NOT ENOUGH EVIDENCE'
-                #print(f'************** FINAL SCORE: NOT ENOUGH SUPPORTING EVIDENCE')
+                print(f'************** FINAL SCORE: NOT ENOUGH SUPPORTING EVIDENCE')
             else:
                 final_score = 'REFUTES'
-                #print(f'************** FINAL SCORE: REFUTES')
+                print(f'************** FINAL SCORE: REFUTES')
 
             output_message += '\n\n*FINAL SCORE:* ' + final_score
             for i in range(len(Filtered_Articles)):
