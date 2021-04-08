@@ -66,6 +66,7 @@ def handle_update(update):
                 job = post_process.delay(x, chat)
                 print('The job id is: ' + job.id)
                 answer_callback_query(callback_query_id, "Your query is being processed.....")
+                send_message('Your query is being processed. Kindly wait for some time.', chat)
             else:
                 answer_callback_query(callback_query_id,
                                       "Please click Yes if you want your message to be fact checked.")
