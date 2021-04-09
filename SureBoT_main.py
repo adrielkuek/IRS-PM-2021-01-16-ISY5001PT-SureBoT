@@ -192,7 +192,7 @@ def query_preprocessing(query):
 
 
 if __name__ == "__main__":
-    text = "https://www.straitstimes.com/singapore/all-adult-sporeans-to-get-100-tourism-vouchers-in-december-for-staycations-attractions-and"
+    text = "https://www.washingtonpost.com/business/what-to-know-about-blood-clots-anaphylaxis-and-other-vaccine-fears/2021/04/07/d1531576-97d9-11eb-8f0a-3384cf4fb399_story.html"
     result = executePipeline(text)
     result = result.encode('utf-16', 'surrogatepass').decode('utf-16')
     print('Result is: ' + result)

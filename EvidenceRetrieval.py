@@ -27,9 +27,10 @@ from spacy.lang.en import English
 from pprint import pprint
 import validators
 import torch
+import multiprocessing
 
 # Params
-length_penalty = 1.5
+length_penalty = 1.0
 topN = 5
 max_length = 128
 dist_thres = 0.4
@@ -88,13 +89,16 @@ class EvidenceRetrieval(object):
         for article_url in articleurls[:topN]:
             try:
                 articletext = fulltext(requests.get(article_url, headers=self.headers).text)
+                print('Length of article text: ' + len(articletext))
 
                 # ************************#
                 # RUN PEGASUS
                 # ************************#
                 print(f'PERFORMING ABSTRACTION - ARTICLE: {article_url} . . .')
                 articlesummary = self.AbstractiveSummary(articletext, length_penalty)
+                print('Article Summary: ' + articlesummary)
                 articlesummarylist.append("".join(articlesummary))
+                print('Abstraction has completed')
 
             except Exception as e:
                 articlesummarylist.append("")
