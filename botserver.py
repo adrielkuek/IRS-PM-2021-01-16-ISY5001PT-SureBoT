@@ -95,6 +95,7 @@ def post_process(query, chat):
             send_message('Sorry, your query took too long to process.', chat)
             print("Pipeline execution for query exceeded 360 seconds")
 
+
 if __name__ == '__main__':
     print('Main is called')
     main_app.run(debug=False, host='0.0.0.0', port=5000, use_reloader=False)

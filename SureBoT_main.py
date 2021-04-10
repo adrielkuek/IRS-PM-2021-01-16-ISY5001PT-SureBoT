@@ -29,6 +29,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import re
 import emoji
+from celery.exceptions import SoftTimeLimitExceeded
 
 from EvidenceRetrieval import EvidenceRetrieval
 from GraphNetFC import graphNetFC
@@ -152,8 +153,11 @@ def executePipeline(query):
                 output_message += '\n\n\n' + Filtered_Articles[i][2] + '\n\n'
                 for j in range(len(Filtered_Articles[i][1])):
                     output_message += Filtered_Articles[i][1][j]
-    except:
-        output_message = 'Exception occurred in pipeline'
+    except Exception as e:
+        if isinstance(e, SoftTimeLimitExceeded):
+            raise
+        else:
+            output_message = 'Exception occurred in pipeline'
 
     return output_message
 
@@ -192,7 +196,7 @@ def query_preprocessing(query):
 
 
 if __name__ == "__main__":
-    text = "Vaccination kill people?"
+    text = "Heng Swee Keat takes himself out of the running for PM"
     result = executePipeline(text)
     result = result.encode('utf-16', 'surrogatepass').decode('utf-16')
     print('Result is: ' + result)
