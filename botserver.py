@@ -29,7 +29,7 @@ def flaskHandler():
 
 def initCode():
     print('test is successful')
-    nltk.download()
+    nltk.download('punkt')
     downloadModels()
 
 

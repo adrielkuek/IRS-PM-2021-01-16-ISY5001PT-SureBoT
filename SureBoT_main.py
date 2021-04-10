@@ -62,7 +62,6 @@ def executePipeline(query):
         print(f'INITIALISE EVIDENCE RETRIEVAL PIPELINE . . .')
         ER_pipeline = EvidenceRetrieval(cwd, device)
 
-        output_message = "*FACT-CHECK:* " + query
         ################# SAMPLE QUERIES/URLS #####################
         # query = "A bus driver has been arrested for careless driving following an accident at Loyang Avenue that killed a 31-year-old cyclist."
         # query = "I will be charged for sending Whatsapp Good morning messages"
@@ -109,6 +108,10 @@ def executePipeline(query):
         Filtered_Articles = ER_pipeline.RetrieveArticles(querytext, topN)
         print(f'>>>>>>> TIME TAKEN - ER PIPELINE: {time.time() - start_time}')
 
+        output_message = "===== FACT CHECK RESULTS ====="
+        output_message += "\nTime-Taken: {} seconds".format((time.time() - start))
+        output_message += "\nQuery Input: {}".format(query)
+
         print(len(Filtered_Articles))
         if len(Filtered_Articles) == 0:
             output_message += '\n\nNO MATCHING ARTICLES FOUND. NOT ENOUGH EVIDENCE!'
@@ -148,9 +151,11 @@ def executePipeline(query):
                 final_score = 'REFUTES'
                 print(f'************** FINAL SCORE: REFUTES')
 
-            output_message += '\n\n*FINAL SCORE:* ' + final_score
+            output_message += '\n\nFINAL SCORE: ' + final_score
+            output_message += "\n\n----- Total Articles Found: {} -----".format(len(Filtered_Articles))
             for i in range(len(Filtered_Articles)):
-                output_message += '\n\n\n' + Filtered_Articles[i][2] + '\n\n'
+                output_message += "\n\nURL {}".format(i+1)
+                output_message += '\n' + Filtered_Articles[i][2] + '\n[Summary]'
                 for j in range(len(Filtered_Articles[i][1])):
                     output_message += Filtered_Articles[i][1][j]
     except Exception as e:
