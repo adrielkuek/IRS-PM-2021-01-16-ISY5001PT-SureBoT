@@ -89,7 +89,6 @@ class EvidenceRetrieval(object):
         for article_url in articleurls[:topN]:
             try:
                 articletext = fulltext(requests.get(article_url, headers=self.headers).text)
-                print('Length of article text: ' + len(articletext))
 
                 # ************************#
                 # RUN PEGASUS
