@@ -88,13 +88,20 @@ class EvidenceRetrieval(object):
         # Summarize the article (take TopN where N is number of articles)
         for article_url in articleurls[:topN]:
             try:
-                articletext = fulltext(requests.get(article_url, headers=self.headers).text)
+
+                article = Article(article_url)
+                article.download()
+                article.parse()
+                article.nlp()
+                article_text = article.text
+
+                #article_text = fulltext(requests.get(article_url, headers=self.headers).text)
 
                 # ************************#
                 # RUN PEGASUS
                 # ************************#
                 print(f'PERFORMING ABSTRACTION - ARTICLE: {article_url} . . .')
-                articlesummary = self.AbstractiveSummary(articletext, length_penalty)
+                articlesummary = self.AbstractiveSummary(article_text, length_penalty)
                 print('Article Summary: ' + articlesummary)
                 articlesummarylist.append("".join(articlesummary))
                 print('Abstraction has completed')
