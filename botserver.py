@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import request
 import json
+from celery.exceptions import SoftTimeLimitExceeded
 
 from flask_celery import make_celery
 from main import setupDB, downloadModels, send_message, build_inline_keyboard, answer_callback_query
@@ -10,6 +11,7 @@ from SureBoT_main import executePipeline
 main_app = Flask(__name__, static_url_path='/static')
 AfterThisResponse(main_app)
 celery = make_celery(main_app)
+celery.config_from_object('celery_config')
 
 
 @main_app.route('/', methods=["POST", "GET"])
@@ -81,13 +83,17 @@ def handle_update(update):
 
 @celery.task(name='botserver.post_process')
 def post_process(query, chat):
-    print('Going to execute pipeline')
-    query_result = executePipeline(query)
-    print("Query result obtained")
-    with main_app.app_context():
-        send_message(query_result, chat)
-        print("After pipeline execution")
-
+    try:
+        print('Going to execute pipeline')
+        query_result = executePipeline(query)
+        print("Query result obtained")
+        with main_app.app_context():
+            send_message(query_result, chat)
+            print("After pipeline execution")
+    except SoftTimeLimitExceeded:
+        with main_app.app_context():
+            send_message('Sorry, your query took too long to process.', chat)
+            print("Pipeline execution for query exceeded 360 seconds")
 
 if __name__ == '__main__':
     print('Main is called')
