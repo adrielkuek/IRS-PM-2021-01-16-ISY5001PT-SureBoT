@@ -2,9 +2,10 @@ from flask import Flask
 from flask import request
 import json
 from celery.exceptions import SoftTimeLimitExceeded
+import nltk
 
 from flask_celery import make_celery
-from main import setupDB, downloadModels, send_message, build_inline_keyboard, answer_callback_query
+from main import downloadModels, send_message, build_inline_keyboard, answer_callback_query
 from AfterResponseMiddleware import AfterThisResponse
 from SureBoT_main import executePipeline
 
@@ -28,8 +29,7 @@ def flaskHandler():
 
 def initCode():
     print('test is successful')
-    setupDB()
-    # initBERT()
+    nltk.download()
     downloadModels()
 
 

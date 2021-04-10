@@ -3,7 +3,6 @@ import requests
 import time
 import urllib
 import config
-from dbhelper import DBHelper
 from transformers import pipeline
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import gdown
@@ -14,7 +13,6 @@ from SureBoT_main import executePipeline
 TIMEOUT = config.timeout
 TOKEN = config.token
 URL = "https://api.telegram.org/bot{}/".format(TOKEN)
-db = DBHelper()
 LABELS = ['misinformation', 'politics', 'health care']
 MODEL_DOWNLOAD_URL = config.model_download_url
 MODEL_ZIP = config.model_zip
@@ -74,18 +72,6 @@ def answer_callback_query(query_id, text):
         print("Exception occurred while processing callback query")
 
 
-def setupDB():
-    db.setup()
-
-
-def initBERT():
-    tokenizer = AutoTokenizer.from_pretrained("facebook/bart-large-mnli")
-    model = AutoModelForSequenceClassification.from_pretrained("facebook/bart-large-mnli")
-    global nlpClassify
-    nlpClassify = pipeline(task='zero-shot-classification', tokenizer=tokenizer, model=model)
-    print("BERT has been initialized")
-
-
 def downloadModels():
     url = MODEL_DOWNLOAD_URL
     output = MODEL_ZIP
@@ -103,9 +89,3 @@ def downloadModels():
             os.remove(output)  # deletezippedfile
     except:
         print("Models were not downloaded")
-
-
-def bertClassify(sequences):
-    results = nlpClassify(sequences=sequences, candidate_labels=LABELS, multi_class=False)
-    resultStr = json.dumps(results)
-    return resultStr
