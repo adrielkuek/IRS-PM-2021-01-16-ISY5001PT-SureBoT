@@ -43,7 +43,8 @@ def send_message(text, chat_id):
 def get_url(url):
     response = requests.get(url)
     content = response.content.decode("utf8")
-    return content
+    code = response.status_code
+    return code
 
 
 def send_message(text, chat_id, reply_markup=None):
@@ -56,7 +57,11 @@ def send_message(text, chat_id, reply_markup=None):
     except:
         url = URL + "sendMessage?text={}&chat_id={}&parse_mode=Markdown".format("Exception occurred", chat_id)
         print("Exception occurred")
-    get_url(url)
+
+    status = get_url(url)
+    if status == 400:
+        url = url.replace('Markdown', 'html')
+        get_url(url)
 
 
 def answer_callback_query(query_id, text):
