@@ -59,7 +59,7 @@ class EvidenceRetrieval(object):
 
     def AbstractiveSummary(self, input_text, length_penalty):
         start_time = time.time()
-        batch = self.PegasusTokenizer(input_text, truncation=True, padding='longest', return_tensors="pt").to(self.device)
+        batch = self.PegasusTokenizer(input_text, truncation=True, max_length=1024, padding='longest', return_tensors="pt").to(self.device)
         translated = self.PegasusModel.generate(**batch, length_penalty=length_penalty)
         summary = self.PegasusTokenizer.batch_decode(translated, skip_special_tokens=True)
         print('\n******************************************')

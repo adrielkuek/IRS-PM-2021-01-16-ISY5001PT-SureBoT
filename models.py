@@ -8,10 +8,10 @@ from torch.nn import BatchNorm1d, Linear, ReLU
 evidence_num = []
 
 # Select CUDA is GPU is availble, else use CPU
-device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+# device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
 class SelfAttentionLayer(nn.Module):
-    def __init__(self, nhid, nins):
+    def __init__(self, nhid, nins, device):
         super(SelfAttentionLayer, self).__init__()
         self.nhid = nhid
         self.nins = nins
@@ -20,12 +20,13 @@ class SelfAttentionLayer(nn.Module):
             ReLU(True),
             Linear(64, 1)
         )
+        self.device = device
 
     def forward(self, inputs, index, claims):
         tmp = None
         if index > -1:
             # idx = torch.LongTensor([index]).cuda()
-            idx = torch.LongTensor([index]).to(device)
+            idx = torch.LongTensor([index]).to(self.device)
             own = torch.index_select(inputs, 1, idx)
             own = own.repeat(1, self.nins, 1)
             tmp = torch.cat((own, inputs), 2)
@@ -37,16 +38,16 @@ class SelfAttentionLayer(nn.Module):
         attention = self.project(tmp)
         weights = F.softmax(attention.squeeze(-1), dim=1)
         print(weights)
-        evidence_num.append(weights.numpy())
+        evidence_num.append(weights.detach().cpu().numpy())
         outputs = (inputs * weights.unsqueeze(-1)).sum(dim=1)
         return outputs
 
 
 class AttentionLayer(nn.Module):
-    def __init__(self, nins, nhid):
+    def __init__(self, nins, nhid, device):
         super(AttentionLayer, self).__init__()
         self.nins = nins
-        self.attentions = [SelfAttentionLayer(nhid=nhid * 2, nins=nins) for _ in range(nins)]
+        self.attentions = [SelfAttentionLayer(nhid=nhid * 2, nins=nins, device=device) for _ in range(nins)]
 
         for i, attention in enumerate(self.attentions):
             self.add_module('attention_{}'.format(i), attention)
@@ -59,18 +60,18 @@ class AttentionLayer(nn.Module):
 
 
 class GEAR(nn.Module):
-    def __init__(self, nfeat, nins, nclass, nlayer, pool):
+    def __init__(self, nfeat, nins, nclass, nlayer, pool, device):
         super(GEAR, self).__init__()
         self.nlayer = nlayer
 
-        self.attentions = [AttentionLayer(nins, nfeat) for _ in range(nlayer)]
+        self.attentions = [AttentionLayer(nins, nfeat, device) for _ in range(nlayer)]
         self.batch_norms = [BatchNorm1d(nins) for _ in range(nlayer)]
         for i, attention in enumerate(self.attentions):
             self.add_module('attention_{}'.format(i), attention)
 
         self.pool = pool
         if pool == 'att':
-            self.aggregate = SelfAttentionLayer(nfeat * 2, nins)
+            self.aggregate = SelfAttentionLayer(nfeat * 2, nins, device)
         # self.index = torch.LongTensor([0]).cuda()
         self.index = torch.LongTensor([0]).to(device)
 

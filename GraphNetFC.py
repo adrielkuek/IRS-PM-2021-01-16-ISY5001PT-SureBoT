@@ -273,7 +273,7 @@ class graphNetFC(object):
         # 9. Load GraphNet pretrained checkpoint for prediction
         test_features, test_claims = load_bert_features_claim_inference(instances)
         graphNet_model= GEAR(nfeat=self.feature_num, nins=self.evidence_num, nclass=self.num_class, 
-                                    nlayer=self.graph_layers, pool=self.graph_pool)
+                                    nlayer=self.graph_layers, pool=self.graph_pool, device=self.device)
         checkpoint = torch.load(self.GEAR_model, map_location=self.device)
         graphNet_model.load_state_dict(checkpoint['model'])
         # Set Graph Net to inference
@@ -284,10 +284,11 @@ class graphNetFC(object):
         with torch.no_grad():
             test_features = test_features.to(self.device)
             test_claims = test_claims.to(self.device)
+            graphNet_model = graphNet_model.to(self.device)
             outputs, heatmap = graphNet_model(test_features, test_claims)
 
         answer = {}
-        answer["predicted_label"] = self.get_predicted_label(outputs)
+        answer["predicted_label"] = self.get_predicted_label(outputs.detach().cpu())
         print(f'>>>>>>> TIME TAKEN - GraphNET: {time.time()- start_time}')
 
         return answer, outputs, heatmap
@@ -301,8 +302,7 @@ def main():
     # input_evidence = ['John is born in Mount Elizabeth hospital', 
     #                     'Mount Elizabeth hospital is located in Novena', 
     #                     'Novena is a district located in Singapore',
-    #                     'People who are born in Singapore are Singaporeans',
-    #                     'Singaporeans are a bunch cool people.']
+    #                     'People who are born in Singapore are Singaporeans']
 
     # input_claim = 'WhatsApp users do not require to pay when sending "Good Morning" messages!'
     # input_evidence = [ 
@@ -310,18 +310,18 @@ def main():
     #  'The above message that has been "forwarded many times" is not real', 
     #  'WhatsApp remains a free messaging app and do not require payment details to be given prior to use']
 
-    input_claim = 'A bus driver has been arrested for careless driving following an accident at Loyang Avenue that killed a 31-year-old cyclist.'
-    input_evidence =  ["The cyclist who was killed along Loyang Avenue near the T-junction with Pasir Ris Drive 1 on Friday, March 19 has been identified as a 31-year-old man from the Philippines.",
-   "The deceased man has been identified as German Gonzales from the Philippines.",
-   "He has been working in Singapore for two years as an aircraft technician.",
-   "The victim and his wife have two sons, aged eight and nine. Marie resides in the Philippines with the couple's children.",
-   "Following the accident, a bus driver, 63, was arrested for careless driving causing death."]
+#     input_claim = 'A bus driver has been arrested for careless driving following an accident at Loyang Avenue that killed a 31-year-old cyclist.'
+#     input_evidence =  ["The cyclist who was killed along Loyang Avenue near the T-junction with Pasir Ris Drive 1 on Friday, March 19 has been identified as a 31-year-old man from the Philippines.",
+#    "The deceased man has been identified as German Gonzales from the Philippines.",
+#    "He has been working in Singapore for two years as an aircraft technician.",
+#    "The victim and his wife have two sons, aged eight and nine. Marie resides in the Philippines with the couple's children.",
+#    "Following the accident, a bus driver, 63, was arrested for careless driving causing death."]
 
-    # input_claim = 'A nurse in the states has just had the vaccine and she died 8 hours later. Politicians in the West including Pfizer CEO have NOT Taken the vaccine.'
-    # input_evidence = ['No health care workers died after Alabama began administering COVID-19 vaccines on Tuesday',
-    # 'Some online posts falsely claimed that a nurse had died after receiving the vaccine',
-    # 'Alabama Department of Public Health officials checked with hospitals that administered the vaccine to confirm that the information was false',
-    # 'The department released a statement on social media to combat the misinformation']
+    input_claim = 'A nurse in the states has just had the vaccine and she died 8 hours later. Politicians in the West including Pfizer CEO have NOT Taken the vaccine.'
+    input_evidence = ['No health care workers died after Alabama began administering COVID-19 vaccines on Tuesday',
+    'Some online posts falsely claimed that a nurse had died after receiving the vaccine',
+    'Alabama Department of Public Health officials checked with hospitals that administered the vaccine to confirm that the information was false',
+    'The department released a statement on social media to combat the misinformation']
 
     cwd = os.path.dirname(__file__)
 
@@ -336,6 +336,8 @@ def main():
 
     # Plot Attention Heat map to visualize
     ax = sns.heatmap(heatmap, linewidth=1.0, cmap="YlGnBu")
+    ax.set(title='Attention Weights Heatmap')
+    plt.savefig('2_layerER_Alabama.png', dpi=300)
     plt.show()
 
 if __name__ == "__main__":

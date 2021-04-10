@@ -32,6 +32,7 @@ from EvidenceRetrieval import EvidenceRetrieval
 from GraphNetFC import graphNetFC
 
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+device_cpu = 'cpu'
 print(f'DEVICE Available: {device}')
 
 # Params - ER
@@ -58,7 +59,7 @@ if __name__ == "__main__":
     ER_pipeline = EvidenceRetrieval(cwd, device)
     
     ################# SAMPLE QUERIES/URLS #####################
-    query = "A bus driver has been arrested for careless driving following an accident at Loyang Avenue that killed a 31-year-old cyclist."
+    query = "Nurses to be allowed to wear Tudung during work in Singapore soon."
     # query = "I will be charged for sending Whatsapp Good morning messages"
     # query = "Alabama nurse in the states has just had the vaccine and she died 8 hours later"
     # query = "https://www.straitstimes.com/singapore/bus-driver-arrested-for-careless-driving-after-cyclist-31-pronounced-dead-in-loyang?utm_source=Telegram&utm_medium=Social&utm_campaign=STTG"
@@ -100,7 +101,7 @@ if __name__ == "__main__":
         print(f'NO MATCHING ARTICLES FOUND. NOT ENOUGH EVIDENCE!')
     else:
         # Run Fact Verification - Graph NET
-        graphNet = graphNetFC(cwd, device, feature_num, evidence_num, graph_layers, 
+        graphNet = graphNetFC(cwd, device_cpu, feature_num, evidence_num, graph_layers, 
                                 num_class, graph_pool, sequence_length)
 
         FactVerification_List = []
@@ -110,7 +111,7 @@ if __name__ == "__main__":
             FactVerification_List.append(pred_dict['predicted_label'])
             print(pred_dict)
             print('[SUPPORTS, REFUTES, NOT ENOUGH INFO]')
-            print((np.array(outputs)))
+            print((np.array(outputs.detach().cpu())))
 
             # Plot Attention Heat map to visualize
             ax = sns.heatmap(heatmap, linewidth=1.0, cmap="YlGnBu")
