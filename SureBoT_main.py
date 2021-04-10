@@ -109,7 +109,7 @@ def executePipeline(query):
         print(f'>>>>>>> TIME TAKEN - ER PIPELINE: {time.time() - start_time}')
 
         output_message = "===== FACT CHECK RESULTS ====="
-        output_message += "\nTime-Taken: {} seconds".format((time.time() - start))
+        output_message += "\nTime-Taken: {} seconds".format(int(time.time() - start))
         output_message += "\nQuery Input: {}".format(query)
 
         print(len(Filtered_Articles))
@@ -155,7 +155,7 @@ def executePipeline(query):
             output_message += "\n\n----- Total Articles Found: {} -----".format(len(Filtered_Articles))
             for i in range(len(Filtered_Articles)):
                 output_message += "\n\nURL {}".format(i+1)
-                output_message += '\n' + Filtered_Articles[i][2] + '\n[Summary]'
+                output_message += '\n' + Filtered_Articles[i][2] + '\n*[Summary]* '
                 for j in range(len(Filtered_Articles[i][1])):
                     output_message += Filtered_Articles[i][1][j]
     except Exception as e:
