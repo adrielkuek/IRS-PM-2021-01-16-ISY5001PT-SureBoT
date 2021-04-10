@@ -68,7 +68,10 @@ def handle_update(update):
                 job = post_process.delay(x, chat)
                 print('The job id is: ' + job.id)
                 answer_callback_query(callback_query_id, "Your query is being processed.....")
-                message = 'Your request is currently being processed. Your query is {} in the queue. Please wait.....'.format(str(get_celery_queue_len('celery')))
+                if get_celery_queue_len('celery') > 0:
+                    message = 'Your request has been received and is no. {} in queue. Please wait.....'.format(str(get_celery_queue_len('celery')))
+                else:
+                    message = 'Your request is currently being processed. Please wait.....'
                 send_message(message, chat)
             else:
                 answer_callback_query(callback_query_id,
