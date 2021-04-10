@@ -202,7 +202,7 @@ def query_preprocessing(query):
 
 
 if __name__ == "__main__":
-    text = "Malaysia is a Asian country"
+    text = "Heng Swee Keat out of the running for PM as he steps down from 4G Leadership"
     result = executePipeline(text)
     result = result.encode('utf-16', 'surrogatepass').decode('utf-16')
     print('Result is: ' + result)

@@ -70,6 +70,7 @@ class EvidenceRetrieval(object):
         summary = "".join(summary)
         print(summary)
         print(f'>>>>>>> TIME TAKEN - ABSTRACTIVE SUMMARY: {time.time() - start_time}')
+        print('******************************************\n')
         return summary
 
     def RetrieveArticles(self, input_text, topN):
@@ -89,24 +90,26 @@ class EvidenceRetrieval(object):
         for article_url in articleurls[:topN]:
             try:
 
-                article = Article(article_url)
-                article.download()
-                article.parse()
-                article.nlp()
-                article_text = article.text
+                # article = Article(article_url)
+                # article.download()
+                # article.parse()
+                # article.nlp()
+                # article_text = article.text
 
-                #article_text = fulltext(requests.get(article_url, headers=self.headers).text)
+                article_text = fulltext(requests.get(article_url, headers=self.headers).text)
 
                 # ************************#
                 # RUN PEGASUS
                 # ************************#
-                print(f'PERFORMING ABSTRACTION - ARTICLE: {article_url} . . .')
+                print(f'\nPERFORMING ABSTRACTION - ARTICLE: {article_url} . . .')
+                print(article_text)
                 articlesummary = self.AbstractiveSummary(article_text, length_penalty)
                 print('Article Summary: ' + articlesummary)
                 articlesummarylist.append("".join(articlesummary))
                 print('Abstraction has completed')
 
             except Exception as e:
+                print('SUMMARISATION ERROR')
                 articlesummarylist.append("")
 
         # pprint(articlesummarylist)
