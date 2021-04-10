@@ -68,7 +68,8 @@ def handle_update(update):
                 job = post_process.delay(x, chat)
                 print('The job id is: ' + job.id)
                 answer_callback_query(callback_query_id, "Your query is being processed.....")
-                send_message('Your query is being processed. Kindly wait for some time.', chat)
+                message = 'Your request is currently being processed. Your query is {} in the queue. Please wait.....'.format(str(get_celery_queue_len('celery')))
+                send_message(message, chat)
             else:
                 answer_callback_query(callback_query_id,
                                       "Please click Yes if you want your message to be fact checked.")
@@ -94,6 +95,11 @@ def post_process(query, chat):
         with main_app.app_context():
             send_message('Sorry, your query took too long to process.', chat)
             print("Pipeline execution for query exceeded 360 seconds")
+
+
+def get_celery_queue_len(queue_name):
+    with celery.pool.acquire(block=True) as conn:
+        return conn.default_channel.client.llen(queue_name)
 
 
 if __name__ == '__main__':
