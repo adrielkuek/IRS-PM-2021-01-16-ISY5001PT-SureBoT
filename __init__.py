@@ -1,5 +1,5 @@
-from .botserver import main_app
-from .botserver import initCode
+from botserver import main_app
+from botserver import initCode
 
 
 def getApp():
