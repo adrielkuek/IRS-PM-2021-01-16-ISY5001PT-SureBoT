@@ -28,6 +28,7 @@ from pprint import pprint
 import validators
 import torch
 import multiprocessing
+from celery.exceptions import SoftTimeLimitExceeded
 
 # Params
 length_penalty = 1.0
@@ -109,8 +110,11 @@ class EvidenceRetrieval(object):
                 print('Abstraction has completed')
 
             except Exception as e:
-                print('SUMMARISATION ERROR')
-                articlesummarylist.append("")
+                if isinstance(e, SoftTimeLimitExceeded):
+                    raise
+                else:
+                    print('SUMMARISATION ERROR')
+                    articlesummarylist.append("")
 
         # pprint(articlesummarylist)
 
