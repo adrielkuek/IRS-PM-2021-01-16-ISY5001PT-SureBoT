@@ -21,9 +21,10 @@ We believe that this chatbot has great value, as the masses are mostly turning t
 
 | Official Full Name | Student ID (MTech Applicable) | Work Items (Who Did What) | Email (Optional)
 | ---- | ---- | ---- | ---- |
-
-
-
+| Adriel Kuek | ---- | ---- | ---- |
+| Chua Hao Zi | A0229960W | ---- | e0687368@e.nus.edu.sg
+| Lanvaya |---- | ---- | ---- |
+| Francis Louis | ---- | ---- | ---- |
 
 
 
