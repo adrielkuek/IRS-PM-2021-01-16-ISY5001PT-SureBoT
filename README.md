@@ -1,11 +1,13 @@
-# SECTION 1: PROJECT TITLE
+# IRS-PM-2021-01-16-ISY5001-FactCheckingChatBot
 
-# Fact-Check Bot: Sure_BoT
+## SECTION 1: PROJECT TITLE
+
+## Fact-Check Bot: Sure_BoT
 
 ![image](https://user-images.githubusercontent.com/67159970/114393719-ee628600-9bcc-11eb-9266-472a2d3041da.png)
 
 
-# SECTION 2: EXECUTIVE SUMMARY / PAPER ABSTRACT
+## SECTION 2: EXECUTIVE SUMMARY / PAPER ABSTRACT
 
 With the rapid technological development happening around the globe, news media has gradually moved away from print media like newspaper to online media. People can get access to live news updates with just a simple click on their smart devices like handphones or tablets. In such a huge database of news within the Internet, not only are there genuine news, there are also fake news or misinformation which are shared by people with ulterior motives. When individuals cannot distinguish genuine news from fake news, believing and spreading of such fake news can lead to major repercussions in economic, political and social areas.
 
@@ -17,7 +19,7 @@ By adopting the techniques learnt in the course, we designed the chatbot such th
 
 We believe that this chatbot has great value, as the masses are mostly turning to popular online medias like Facebook or Google for local news and news updates, which heightened the chance of the proliferation of fake news or misinformation. Through this chatbot, the masses can easily do their fact-check and receive authentic knowledge. That, in turn, can reduce or eliminate negative impacts like radicalization, religious and racial hatred.
 
-# SECTION 3: CREDITS / PROJECT CONTRIBUTION
+## SECTION 3: CREDITS / PROJECT CONTRIBUTION
 
 | Official Full Name | Student ID (MTech Applicable) | Work Items (Who Did What) | Email (Optional)
 | ---- | ---- | ---- | ---- |
@@ -27,13 +29,13 @@ We believe that this chatbot has great value, as the masses are mostly turning t
 | Francis Louis | ---- | 1. Market Research <br /> 2. Backend Development Support <br /> 3. Project Report Writing | ---- |
 
 
-# SECTION 4: VIDEO OF SYSTEM MODELLING & USE CASE DEMO
+## SECTION 4: VIDEO OF SYSTEM MODELLING & USE CASE DEMO
 
 * Insert video link here*
 
-# SECTION 5: USER GUIDE
+## SECTION 5: USER GUIDE
 
-## Installation
+### Installation
 Reccomend to use python 3.7 or higher. Requires Pytorch and Transformers from Huggingface
 
 **Step 1: Get the repository**
@@ -87,7 +89,7 @@ python -m spacy download en_core_web_sm
 ```
 
 
-# SECTION 6: PROJECT REPORT / PAPER
+## SECTION 6: PROJECT REPORT / PAPER
 
 `Refer to project report at Github Folder: ProjectReport`
 
