@@ -21,10 +21,10 @@ We believe that this chatbot has great value, as the masses are mostly turning t
 
 | Official Full Name | Student ID (MTech Applicable) | Work Items (Who Did What) | Email (Optional)
 | ---- | ---- | ---- | ---- |
-| Adriel Kuek | ---- | 1. System Architecture Design <br /> 2. Implementation of Model Pipeline| ---- |
-| Chua Hao Zi | A0229960W | ---- | e0687368@e.nus.edu.sg
-| Lanvaya |---- | ---- | ---- |
-| Francis Louis | ---- | ---- | ---- |
+| Adriel Kuek | ---- | 1. System Architecture Design <br /> 2. Implementation of Model Pipeline <br /> 3. Video Creation < br/>4. Project Report Writing| ---- |
+| Chua Hao Zi | A0229960W | 1. Implementation of Model Pipeline | e0687368@e.nus.edu.sg |
+| Lanvaya | ---- | 1. Backend Development (Cloud & Telegram) <br /> 2. Video Creation <br />3. Project Report Writing | ---- |
+| Francis Louis | ---- | 1. Backend Development Support <br /> 2. Project Report Writing | ---- |
 
 
 
