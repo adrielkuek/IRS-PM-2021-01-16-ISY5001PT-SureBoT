@@ -1,12 +1,21 @@
 # SECTION 1: PROJECT TITLE
 
-## Fact-Check Bot: Sure_BoT
+# Fact-Check Bot: Sure_BoT
+
+![image](https://user-images.githubusercontent.com/67159970/114393719-ee628600-9bcc-11eb-9266-472a2d3041da.png)
 
 
+# SECTION 2: EXECUTIVE SUMMARY / PAPER ABSTRACT
 
+With the rapid technological development happening around the globe, news media has gradually moved away from print media like newspaper to online media. People can get access to live news updates with just a simple click on their smart devices like handphones or tablets. In such a huge database of news within the Internet, not only are there genuine news, there are also fake news or misinformation which are shared by people with ulterior motives. When individuals cannot distinguish genuine news from fake news, believing and spreading of such fake news can lead to major repercussions in economic, political and social areas.
 
+Currently, to verify these news of dubious contents, the reader has to check online with authentic sources like Factcheck.org or Factually (Singapore context). And the reader may need to fact-check with more than one data source to verify the authenticity of the news. Such verification will take quite some time and not many people will know how to do this check, especially the elderly and those who are not savvy with technology.
 
+Our team of four would like to resolve this global issue by creating a chatbot on social media which can do the fact-check on behalf of the human users. By deploying the chatbot on the common social media platform like Telegram or Whatsapp, we can greatly increase the accessibility of the chatbot to the masses. And the simplicity of the bot (i.e. one just needs to input the claim and the chatbot will do the rest) ensures that even elderly can use it.
 
+By adopting the techniques learnt in the course, we designed the chatbot such that it can take the input (statement or article URL link) and summarize the contents. Based on the summarized inputs, it will search online from authentic sources and extract a list of relevant articles, using similarity reasoning. It will then process through these articles and output scores that will either support or refute the claims. 
+
+We believe that this chatbot has great value, as the masses are mostly turning to popular online medias like Facebook or Google for local news and news updates, which heightened the chance of the proliferation of fake news or misinformation. Through this chatbot, the masses can easily do their fact-check and receive authentic knowledge. That, in turn, can reduce or eliminate negative impacts like radicalization, religious and racial hatred.
 
 
 
