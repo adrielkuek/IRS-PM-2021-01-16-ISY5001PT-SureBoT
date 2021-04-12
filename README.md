@@ -1,3 +1,34 @@
+# SECTION 1: PROJECT TITLE
+
+Fact-Check Bot: Sure_BoT
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=======================================================================================================================
 # FactCheck_SureBo-T
 In fulfillment for Practice Module for Intelligent Reasoning Systems Graduate Certificate (AY2021-SEM2)
 (NUS-Institute of System Sciences)
