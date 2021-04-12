@@ -17,8 +17,10 @@ By adopting the techniques learnt in the course, we designed the chatbot such th
 
 We believe that this chatbot has great value, as the masses are mostly turning to popular online medias like Facebook or Google for local news and news updates, which heightened the chance of the proliferation of fake news or misinformation. Through this chatbot, the masses can easily do their fact-check and receive authentic knowledge. That, in turn, can reduce or eliminate negative impacts like radicalization, religious and racial hatred.
 
+# SECTION 3: CREDITS / PROJECT CONTRIBUTION
 
-
+| Official Full Name | Student ID (MTech Applicable) | Work Items (Who Did What) | Email (Optional)
+| ---- | ---- | ---- | ---- |
 
 
 
