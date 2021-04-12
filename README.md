@@ -109,30 +109,3 @@ python -m spacy download en_core_web_sm
 > **zhan.gu@nus.edu.sg**
 
 
-=======================================================================================================================
-# FactCheck_SureBo-T
-In fulfillment for Practice Module for Intelligent Reasoning Systems Graduate Certificate (AY2021-SEM2)
-(NUS-Institute of System Sciences)
-
-Creating an automated end-to-end fact checking and verification Bot using Telegram BOT API for timely intervention against mis/disinformation in Singapore.
-
-The fact checking pipeline employs multiple NLP modules that aims to determine the context of the input query in relation to news articles presented as evidences which are intelligently scrapped from the internet. The core of the reasoning system is a fully connected graph network for evidence reasoning and aggregation, together with an automated framework for online evidence mining and ranking.
-
-## Video Introductions
-** TO INPUT VIDEO LINK HERE **
-
-## Getting Started
-**Step 1: Input the query**
-
-Create a sample input query to test pipeline in side SureBoT_main.py
-```
-query = "A bus driver has been arrested for careless driving following an accident at Loyang Avenue that killed a 31-year-old cyclist."
-```
-**Step 2: Run the test code**
-
-Run the SureBoT_main.py
-```
-python SureBoT_main.py
-```
-## Reports
-
