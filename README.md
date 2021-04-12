@@ -46,9 +46,9 @@ We believe that this chatbot has great value, as the masses are mostly turning t
 
 **This [Machine Reasoning (MR)](https://www.iss.nus.edu.sg/executive-education/course-exams-finder/course-finder) course is part of the Analytics and Intelligent Systems and [Graduate Certificate in Intelligent Reasoning Systems (IRS)](https://www.iss.nus.edu.sg/stackable-certificate-programmes/intelligent-systems) series offered by [NUS-ISS](https://www.iss.nus.edu.sg/).**
 
-**Lecturer: [GU Zhan (Sam)](https://www.iss.nus.edu.sg/about-us/staff/detail/201/GU%20Zhan)
+**Lecturer: [GU Zhan (Sam)](https://www.iss.nus.edu.sg/about-us/staff/detail/201/GU%20Zhan)**
 
-> **zhan.gu@nus.edu.sg
+> **zhan.gu@nus.edu.sg**
 
 
 =======================================================================================================================
