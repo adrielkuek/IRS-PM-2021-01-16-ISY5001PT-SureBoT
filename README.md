@@ -1,6 +1,6 @@
 # SECTION 1: PROJECT TITLE
 
-Fact-Check Bot: Sure_BoT
+## Fact-Check Bot: Sure_BoT
 
 
 
