@@ -21,47 +21,17 @@ We believe that this chatbot has great value, as the masses are mostly turning t
 
 | Official Full Name | Student ID (MTech Applicable) | Work Items (Who Did What) | Email (Optional)
 | ---- | ---- | ---- | ---- |
-| Adriel Kuek | ---- | 1. System Architecture Design <br /> 2. Implementation of Model Pipeline <br /> 3. Video Creation <br /> 4. Project Report Writing| ---- |
-| Chua Hao Zi | A0229960W | 1. Implementation of Model Pipeline <br /> 2. Video Creation <br /> 3. Project Report Writing  | e0687368@e.nus.edu.sg |
-| Lanvaya | ---- | 1. Backend Development (Cloud & Telegram) <br /> 2. Project Report Writing | ---- |
-| Francis Louis | ---- | 1. Backend Development Support <br /> 2. Project Report Writing | ---- |
+| Adriel Kuek | ---- | 1. Market Research <br /> 2. System Architecture Design <br /> 3. Implementation of Model Pipeline <br /> 4. Video Creation <br /> 5. Project Report Writing| ---- |
+| Chua Hao Zi | A0229960W | 1. Market Research <br /> 2. Implementation of Model Pipeline <br /> 3. Video Creation <br /> 4. Project Report Writing  | e0687368@e.nus.edu.sg |
+| Lanvaya | ---- | 1. Market Research <br /> 2. Backend Development (Google Cloud & Telegram) <br /> 3. Project Report Writing | ---- |
+| Francis Louis | ---- | 1. Market Research <br /> 2. Backend Development Support <br /> 3. Project Report Writing | ---- |
 
 
 # SECTION 4: VIDEO OF SYSTEM MODELLING & USE CASE DEMO
 
+* Insert video link here*
+
 # SECTION 5: USER GUIDE
-
-# SECTION 6: PROJECT REPORT / PAPER
-
-`Refer to project report at Github Folder: ProjectReport`
-
-- Executive Summary
-- Problem Description
-- Knowledge Modelling
-- Solution Outline
-- Conclusion & Reference
-- Appendix of report:Project Proposal
-- Appendix of report:Installation & User Guide
-- Appendix of report:1-2 pages individual project report per project member
-
-**This [Machine Reasoning (MR)](https://www.iss.nus.edu.sg/executive-education/course-exams-finder/course-finder) course is part of the Analytics and Intelligent Systems and [Graduate Certificate in Intelligent Reasoning Systems (IRS)](https://www.iss.nus.edu.sg/stackable-certificate-programmes/intelligent-systems) series offered by [NUS-ISS](https://www.iss.nus.edu.sg/).**
-
-**Lecturer: [GU Zhan (Sam)](https://www.iss.nus.edu.sg/about-us/staff/detail/201/GU%20Zhan)**
-
-> **zhan.gu@nus.edu.sg**
-
-
-=======================================================================================================================
-# FactCheck_SureBo-T
-In fulfillment for Practice Module for Intelligent Reasoning Systems Graduate Certificate (AY2021-SEM2)
-(NUS-Institute of System Sciences)
-
-Creating an automated end-to-end fact checking and verification Bot using Telegram BOT API for timely intervention against mis/disinformation in Singapore.
-
-The fact checking pipeline employs multiple NLP modules that aims to determine the context of the input query in relation to news articles presented as evidences which are intelligently scrapped from the internet. The core of the reasoning system is a fully connected graph network for evidence reasoning and aggregation, together with an automated framework for online evidence mining and ranking.
-
-## Video Introductions
-** TO INPUT VIDEO LINK HERE **
 
 ## Installation
 Reccomend to use python 3.7 or higher. Requires Pytorch and Transformers from Huggingface
@@ -115,6 +85,39 @@ Download ``en_core_web_sm`` via the following command
 ```
 python -m spacy download en_core_web_sm
 ```
+
+
+# SECTION 6: PROJECT REPORT / PAPER
+
+`Refer to project report at Github Folder: ProjectReport`
+
+- Executive Summary
+- Problem Description
+- Knowledge Modelling
+- Solution Outline
+- Conclusion & Reference
+- Appendix of report:Project Proposal
+- Appendix of report:Installation & User Guide
+- Appendix of report:1-2 pages individual project report per project member
+
+**This [Machine Reasoning (MR)](https://www.iss.nus.edu.sg/executive-education/course-exams-finder/course-finder) course is part of the Analytics and Intelligent Systems and [Graduate Certificate in Intelligent Reasoning Systems (IRS)](https://www.iss.nus.edu.sg/stackable-certificate-programmes/intelligent-systems) series offered by [NUS-ISS](https://www.iss.nus.edu.sg/).**
+
+**Lecturer: [GU Zhan (Sam)](https://www.iss.nus.edu.sg/about-us/staff/detail/201/GU%20Zhan)**
+
+> **zhan.gu@nus.edu.sg**
+
+
+=======================================================================================================================
+# FactCheck_SureBo-T
+In fulfillment for Practice Module for Intelligent Reasoning Systems Graduate Certificate (AY2021-SEM2)
+(NUS-Institute of System Sciences)
+
+Creating an automated end-to-end fact checking and verification Bot using Telegram BOT API for timely intervention against mis/disinformation in Singapore.
+
+The fact checking pipeline employs multiple NLP modules that aims to determine the context of the input query in relation to news articles presented as evidences which are intelligently scrapped from the internet. The core of the reasoning system is a fully connected graph network for evidence reasoning and aggregation, together with an automated framework for online evidence mining and ranking.
+
+## Video Introductions
+** TO INPUT VIDEO LINK HERE **
 
 ## Getting Started
 **Step 1: Input the query**
