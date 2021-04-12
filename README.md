@@ -98,9 +98,9 @@ python -m spacy download en_core_web_sm
 - Knowledge Modelling
 - Solution Outline
 - Conclusion & Reference
-- Appendix of report:Project Proposal
-- Appendix of report:Installation & User Guide
-- Appendix of report:1-2 pages individual project report per project member
+- Appendix of report: Project Proposal
+- Appendix of report: Installation & User Guide
+- Appendix of report: 1-2 pages individual project report per project member
 
 **This [Machine Reasoning (MR)](https://www.iss.nus.edu.sg/executive-education/course-exams-finder/course-finder) course is part of the Analytics and Intelligent Systems and [Graduate Certificate in Intelligent Reasoning Systems (IRS)](https://www.iss.nus.edu.sg/stackable-certificate-programmes/intelligent-systems) series offered by [NUS-ISS](https://www.iss.nus.edu.sg/).**
 
