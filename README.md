@@ -16,6 +16,7 @@ Currently, to verify news of doubtful content, one must follow a series of steps
 Our team of four would like to resolve this global issue by creating an intelligent chatbot to provide an end-to-end automated fact-checking tool. We established the chatbot on a common and popular messaging platform like Telegram to increase the accessibility to the masses. The beauty of the chatbot lies in its simplicity, ease-of-use and 24/7 availability. One only needs to input a claim to fact-check and the chatbot takes care of everything else. This minimalistic approach ensures that even the elderly will be able to use it as well.
 
 By adopting the techniques acquired during the course, we designed the chatbot based on a cognitive framework that takes in a user input, applies feature extraction and knowledge reasoning techniques to produce a classification output that decides whether the supporting evidence “SUPPORTS” or “REFUTES” the input claim.
+
 We believe that this chatbot has great value, as the shift towards digital news consumption through online will only increase exponentially. The chances of a person intentionally or unintentionally proliferating misinformation will only become higher. Through this project, we aim to provide to the masses a tool to combat the rise of fake news and improve digital literacy. That, in turn, can further reduce or eliminate negative societal impacts such as radicalisation, religious or racial discord.
 
 
