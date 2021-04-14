@@ -4,8 +4,7 @@
 
 ## Fact-Check Bot: Sure_BoT
 
-![image](https://user-images.githubusercontent.com/67159970/114393719-ee628600-9bcc-11eb-9266-472a2d3041da.png)
-
+![surebot](https://user-images.githubusercontent.com/67159970/114734523-dfb7d280-9d76-11eb-9d84-a029fa6a5a29.gif)
 
 ## SECTION 2: EXECUTIVE SUMMARY / PAPER ABSTRACT
 
