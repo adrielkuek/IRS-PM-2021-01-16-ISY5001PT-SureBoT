@@ -23,14 +23,14 @@ We believe that this chatbot has great value, as the shift towards digital news 
 
 | Official Full Name | Student ID (MTech Applicable) | Work Items (Who Did What) | Email (Optional)
 | ---- | ---- | ---- | ---- |
-| Adriel Kuek | A0229985H | 1. Market Research <br /> 2. System Architecture Design <br /> 3. Implementation of Model Pipeline <br /> 4. Video Creation <br /> 5. Project Report Writing| ---- |
+| Adriel Kuek | A0229985H | 1. Market Research <br /> 2. System Architecture Design <br /> 3. Implementation of Model Pipeline <br /> 4. Video Creation <br /> 5. Project Report Writing| adrielkuek@gmail.com |
 | Chua Hao Zi | A0229960W | 1. Market Research <br /> 2. Implementation of Model Pipeline <br /> 3. Video Creation <br /> 4. Project Report Writing  | e0687368@e.nus.edu.sg |
 | Lanvaya | ---- | 1. Market Research <br /> 2. Backend Development (Google Cloud & Telegram) <br /> 3. Implementation of Model Pipeline <br /> 4. Project Report Writing | ---- |
 | Francis Louis | ---- | 1. Market Research <br /> 2. Backend Development Support <br /> 3. Project Report Writing | ---- |
 
 
 ## SECTION 4: MARKETING VIDEO
-https://youtu.be/fJNA814xZsY
+[![Watch the video](https://img.youtube.com/vi/fJNA814xZsY/0.jpg)](https://youtu.be/fJNA814xZsY)
 
 ## SECTION 5: USER GUIDE
 
@@ -87,7 +87,7 @@ Download ``en_core_web_sm`` via the following command
 python -m spacy download en_core_web_sm
 ```
 ## SECTION 6: SYSTEM EXPLAINER VIDEO
-https://youtu.be/fJNA814xZsY
+[![Watch the video](https://img.youtube.com/vi/5dgpMpF1qrY/0.jpg)](https://youtu.be/5dgpMpF1qrY)
 
 ## SECTION 7: PROJECT REPORT / PAPER
 
