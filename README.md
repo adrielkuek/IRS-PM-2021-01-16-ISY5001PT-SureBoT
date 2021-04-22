@@ -29,9 +29,8 @@ We believe that this chatbot has great value, as the shift towards digital news 
 | Francis Louis | ---- | 1. Market Research <br /> 2. Backend Development Support <br /> 3. Project Report Writing | ---- |
 
 
-## SECTION 4: VIDEO OF SYSTEM MODELLING & USE CASE DEMO
-
-* Insert video link here*
+## SECTION 4: MARKETING VIDEO
+https://youtu.be/fJNA814xZsY
 
 ## SECTION 5: USER GUIDE
 
@@ -87,9 +86,10 @@ Download ``en_core_web_sm`` via the following command
 ```
 python -m spacy download en_core_web_sm
 ```
+## SECTION 6: SYSTEM EXPLAINER VIDEO
+https://youtu.be/fJNA814xZsY
 
-
-## SECTION 6: PROJECT REPORT / PAPER
+## SECTION 7: PROJECT REPORT / PAPER
 
 `Refer to project report at Github Folder: ProjectReport`
 
