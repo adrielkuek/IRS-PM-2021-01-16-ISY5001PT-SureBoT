@@ -1,3 +1,9 @@
 models/
 pretrained_models/
 __pycache__/
+SurebotLog/
+access.log
+error.log
+celery_log.log
+supervisord.log
+

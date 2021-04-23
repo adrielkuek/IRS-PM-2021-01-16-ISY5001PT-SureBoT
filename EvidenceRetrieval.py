@@ -29,6 +29,7 @@ import validators
 import torch
 import multiprocessing
 from celery.exceptions import SoftTimeLimitExceeded
+import logging
 
 # Params
 length_penalty = 1.0
@@ -38,28 +39,34 @@ dist_thres = 0.4
 
 
 class EvidenceRetrieval(object):
-    def __init__(self, filepath, device):
+    def __init__(self, filepath, device, loggerHandle):
         self.device = device
         self.filepath = filepath
         # Initialise GoogleNews API
         self.pygn = GoogleNews(lang="en")
         self.headers = {
             'user-agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.835.163 Safari/535.1'}
+        self.logger = loggerHandle
 
         # Load Models
         start_time = time.time()
         print(f'LOADING PEGASUS MODEL . . .')
+        self.logger.info(f'LOADING PEGASUS MODEL . . .')
         PegasusModel_dir = self.filepath + '/pipeline_models/models/pegasus-cnn_dailymail'
         self.PegasusTokenizer = PegasusTokenizer.from_pretrained(PegasusModel_dir)
         self.PegasusModel = PegasusForConditionalGeneration.from_pretrained(PegasusModel_dir).to(self.device)
         print('\n*******PEGASUS TOKENIZER AND MODEL LOADED*******')
         print(f'LOADING SENTENCE-BERT MODEL . . .')
+        self.logger.info('\n*******PEGASUS TOKENIZER AND MODEL LOADED*******')
+        self.logger.info(f'LOADING SENTENCE-BERT MODEL . . .')
         # SentenceModel_dir = self.filepath + '/pipeline_models/models/stsb-distilbert-base'
         SentenceModel_dir = self.filepath + '/pipeline_models/models/msmarco-distilroberta-base-v2'
         self.sentenceTokenizer = AutoTokenizer.from_pretrained(SentenceModel_dir)
         self.sentenceBERT = AutoModel.from_pretrained(SentenceModel_dir)
         print('\n*******DISTILROBERTA MODEL LOADED*******')
         print(f'>>>>>>> TIME TAKEN - MODELS LOADING: {time.time() - start_time}')
+        self.logger.info('\n*******DISTILROBERTA MODEL LOADED*******')
+        self.logger.info(f'>>>>>>> TIME TAKEN - MODELS LOADING: {time.time() - start_time}')
 
     def AbstractiveSummary(self, input_text, length_penalty):
         start_time = time.time()
@@ -68,10 +75,14 @@ class EvidenceRetrieval(object):
         translated = self.PegasusModel.generate(**batch, length_penalty=length_penalty)
         summary = self.PegasusTokenizer.batch_decode(translated, skip_special_tokens=True)
         print('\n******************************************')
+        self.logger.info('\n******************************************')
         summary = "".join(summary)
         print(summary)
+        self.logger.info(summary)
         print(f'>>>>>>> TIME TAKEN - ABSTRACTIVE SUMMARY: {time.time() - start_time}')
         print('******************************************\n')
+        self.logger.info(f'>>>>>>> TIME TAKEN - ABSTRACTIVE SUMMARY: {time.time() - start_time}')
+        self.logger.info('******************************************\n')
         return summary
 
     def RetrieveArticles(self, input_text, topN):
@@ -86,6 +97,7 @@ class EvidenceRetrieval(object):
             article_info = search["entries"][article_num]["links"]
             articleurls.append(article_info[-1]["href"])
         print(f'\n******* Found No. of articles = {len(articleurls)} *******')
+        self.logger.info(f'\n******* Found No. of articles = {len(articleurls)} *******')
 
         # Summarize the article (take TopN where N is number of articles)
         for article_url in articleurls[:topN]:
@@ -103,17 +115,22 @@ class EvidenceRetrieval(object):
                 # RUN PEGASUS
                 # ************************#
                 print(f'\nPERFORMING ABSTRACTION - ARTICLE: {article_url} . . .')
-                print(article_text)
+                # print(article_text)
+                self.logger.info(f'\nPERFORMING ABSTRACTION - ARTICLE: {article_url} . . .')
+                # self.logger.info(article_text)
                 articlesummary = self.AbstractiveSummary(article_text, length_penalty)
                 print('Article Summary: ' + articlesummary)
+                self.logger.info('Article Summary: ' + articlesummary)
                 articlesummarylist.append("".join(articlesummary))
                 print('Abstraction has completed')
+                self.logger.info('Abstraction has completed')
 
             except Exception as e:
                 if isinstance(e, SoftTimeLimitExceeded):
                     raise
                 else:
                     print('SUMMARISATION ERROR')
+                    self.logger.info('SUMMARISATION ERROR')
                     articlesummarylist.append("")
 
         # pprint(articlesummarylist)
@@ -129,6 +146,7 @@ class EvidenceRetrieval(object):
             similaritylist.append(similarityscore.detach().cpu().numpy())
 
         print(f'SIMILARITY LIST SCORES: {similaritylist}')
+        self.logger.info(f'SIMILARITY LIST SCORES: {similaritylist}')
 
         #####################################################
         # Filter Relevant Articles - Distance Threshold > 0.4
@@ -138,6 +156,7 @@ class EvidenceRetrieval(object):
                             for article in articlesimilarity if article[0] > dist_thres]
 
         pprint(filteredarticles)
+        self.logger.info(filteredarticles)
 
         # Output to excel/csv file [Optional]
         # df = pd.DataFrame(filteredarticles, columns=["Score", "Summarized Content", "URL"])
@@ -157,6 +176,7 @@ class EvidenceRetrieval(object):
             model_output = self.sentenceBERT(**encoded_input)
         sentence_embeddings = self.mean_pooling(model_output, encoded_input['attention_mask'])
         print(f'>>>>>>> TIME TAKEN - SEMANTIC COMPARISON: {time.time() - start_time}')
+        self.logger.info(f'>>>>>>> TIME TAKEN - SEMANTIC COMPARISON: {time.time() - start_time}')
         return sentence_embeddings
 
     # Mean Pooling - Take attention mask into account for correct averaging

@@ -7,13 +7,13 @@ import nltk
 from flask_celery import make_celery
 from main import downloadModels, send_message, build_inline_keyboard, answer_callback_query
 from AfterResponseMiddleware import AfterThisResponse
-from SureBoT_main import executePipeline
+from SureBoT_main import executePipeline, configure_logger
 
 main_app = Flask(__name__, static_url_path='/static')
 AfterThisResponse(main_app)
 celery = make_celery(main_app)
 celery.config_from_object('celery_config')
-
+n = 10
 
 @main_app.route('/', methods=["POST", "GET"])
 def flaskHandler():
@@ -41,8 +41,46 @@ def handle_update(update):
                 text = update["message"]["text"]
                 if text == "/start":
                     send_message(
-                        "Do you need to fact check any message? Copy and paste it in the chat and we will do the work for you!!",
+                        "Hi! Thanks for using SureBoT!\nDo you need to fact-check a message? Copy and paste it in the chat to get started.",
                         chat)
+                elif text == "/debugCelery":
+                    send_message("(DEBUG MODE) Fetching Celery Worker Log...", chat)
+                    filehandle = open('celery_log.log', 'r')
+                    while True:
+                        # read a single line
+                        # for i in range(n):
+                        line = filehandle.readline()
+                        for i in range(n):
+                            if not line:
+                                break
+                            line += filehandle.readline()
+                        if not line:
+                            break
+                        send_message(line, chat)
+                    filehandle.close()
+                elif text == "/debugIBPU":
+                    send_message("(DEBUG MODE) Fetching Log from IBPU...", chat)
+                    logfile = f'./SurebotLog/chat_{str(chat)}.log'
+                    filehandle = open(logfile, 'r')
+                    while True:
+                        # read a single line
+                        # for i in range(n):
+                        line = filehandle.readline()
+                        for i in range(n):
+                            if not line:
+                                break
+                            line += filehandle.readline()
+                        if not line:
+                            break
+                        send_message(line, chat)
+                    filehandle.close()
+                elif text == "/debugGunicorn":
+                    send_message("(DEBUG MODE) Fetching Gunicorn log...", chat)
+                    filehandle = open('error.log', 'r')
+                    errorlog = filehandle.read()
+                    filehandle.close()
+                    # Return latest logs only (Max length 4096 chars)
+                    send_message(errorlog[-4096:], chat)
                 elif text.startswith("/"):
                     return
                 else:
@@ -88,8 +126,11 @@ def handle_update(update):
 @celery.task(name='botserver.post_process')
 def post_process(query, chat):
     try:
-        print('Going to execute pipeline')
-        query_result = executePipeline(query)
+        print('Generating Logs')
+        chat_string = str(chat)
+        surebot_logger = configure_logger(chat_string)
+        print('Executing pipeline')
+        query_result = executePipeline(query, surebot_logger)
         print("Query result obtained")
         with main_app.app_context():
             send_message(query_result, chat)
