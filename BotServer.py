@@ -25,13 +25,6 @@ def flaskHandler():
     return 'This is a Telegram Bot Server.'
 
 
-def getApp():
-    print("Calling function to initialize")
-    initCode()
-    print("Code initialization has successfully completed")
-    return main_app
-
-
 def initCode():
     nltk.download('punkt')
     downloadModels()
