@@ -1,9 +1,13 @@
+"""
+Utility script to download and unzip models to the relevant folder
+"""
+
 import gdown
 import zipfile, os
 import bot_config
 
 
-url = bot_config.model_download_url
+url = '<MODEL-DOWNLOAD-URL>'
 output = bot_config.model_zip
 try:
     if os.path.isdir(os.path.dirname(os.path.realpath(__file__)) + bot_config.model_folder):

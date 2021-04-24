@@ -1,3 +1,7 @@
+"""
+Gunicorn Config file for Bot Server
+"""
+
 import multiprocessing
 
 preload_app = True

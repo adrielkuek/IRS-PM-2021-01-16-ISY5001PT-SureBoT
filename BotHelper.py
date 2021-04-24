@@ -1,3 +1,7 @@
+"""
+Helper class for the Bot server to handle Telegram requests
+"""
+
 import json
 import requests
 import urllib
@@ -61,11 +65,11 @@ def downloadModels():
         else:
             gdown.download(url, output, quiet=False)
             print("Creating zip file object")
-            zip_ref = zipfile.ZipFile(output)  # createzipfileobject
+            zip_ref = zipfile.ZipFile(output)  # create zipfile object
             print("Extracting files to directory")
-            zip_ref.extractall()  # extractfiletodir
-            zip_ref.close()  # closefile
+            zip_ref.extractall()  # extract file to dir
+            zip_ref.close()  # close file
             print("Removing downloaded zip")
-            os.remove(output)  # deletezippedfile
+            os.remove(output)  # delete zipped file
     except:
         print("Models were not downloaded")

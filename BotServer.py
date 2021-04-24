@@ -1,3 +1,7 @@
+"""
+Bot server implemented using Flask (Python Web Framework)
+"""
+
 from flask import Flask
 from flask import request
 import json
@@ -47,6 +51,7 @@ def handle_update(update):
                     send_message(
                         "Hi! Thanks for using SureBoT!\nDo you need to fact-check a message? Copy and paste it in the chat to get started.",
                         chat)
+                    '''
                 elif text == "/debugCelery":
                     send_message("(DEBUG MODE) Fetching Celery Worker Log...", chat)
                     filehandle = open('celery_log.log', 'r')
@@ -85,6 +90,7 @@ def handle_update(update):
                     filehandle.close()
                     # Return latest logs only (Max length 4096 chars)
                     send_message(gunicornlog[-4096:], chat)
+                    '''
                 elif text.startswith("/"):
                     return
                 else:

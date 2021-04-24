@@ -1,3 +1,7 @@
+"""
+Provides a Celery instance integrated with Flask
+"""
+
 from celery import Celery
 import bot_config
 

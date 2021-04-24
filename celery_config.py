@@ -1,3 +1,7 @@
+"""
+Celery Config File for Bot Server
+"""
+
 result_backend = 'redis://localhost:6379/0'
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
 task_time_limit = 420
