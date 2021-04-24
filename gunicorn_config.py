@@ -12,7 +12,7 @@ worker_connections = 1000
 timeout = 400
 keepalive = 2
 
-errorlog = 'error.log'
+errorlog = 'gunicorn_log.log'
 loglevel = 'debug'
 accesslog = 'access.log'
 

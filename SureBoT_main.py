@@ -3,10 +3,10 @@ Authors: Adriel Kuek, Chua Hao Zi, Lavanya, Francis Louis
 Date Created: 25 March 2021
 Version:
 Email: hz29990@gmail.com, adrielkuek@gmail.com, francis.louis@gmail.com, lavanya2204@hotmail.com
-Status: Devlopment
+Status: Development
 
 Description:
-SureBo(T) is an end to end automatec fact-checking BOT based on
+SureBo(T) is an end to end automatic fact-checking BOT based on
 TELEGRAM API that retrieves multi document inputs for fact
 verification based on a single input query. The input query currently
 takes the form of a text message that is dubious in content.
@@ -16,17 +16,11 @@ project under the Master of Technology (Intelligent Systems)
 - NUS Institute of System Sciences (AY2021 - Semester 2)
 
 """
-from newspaper import fulltext, Article, Config
-import requests, time, os, numpy as np, pandas as pd
-from transformers import AutoTokenizer, AutoModel, PegasusTokenizer, PegasusForConditionalGeneration
-from sentence_transformers import SentenceTransformer, util
-from pygooglenews import GoogleNews
+from newspaper import fulltext
+import requests, time, os, numpy as np
 from spacy.lang.en import English
-from pprint import pprint
 import validators
 import torch
-import matplotlib.pyplot as plt
-import seaborn as sns
 import re
 import emoji
 from celery.exceptions import SoftTimeLimitExceeded
@@ -34,8 +28,6 @@ import logging
 
 from EvidenceRetrieval import EvidenceRetrieval
 from GraphNetFC import graphNetFC
-
-# from main import *
 from pyfiglet import Figlet
 
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
@@ -70,28 +62,6 @@ def executePipeline(query, surebot_logger):
         surebot_logger.info(f'INITIALISE EVIDENCE RETRIEVAL PIPELINE . . .')
         ER_pipeline = EvidenceRetrieval(cwd, device, surebot_logger)
 
-        ################# SAMPLE QUERIES/URLS #####################
-        # query = "Nurses to be allowed to wear Tudung during work in Singapore soon."
-        # query = "I will be charged for sending Whatsapp Good morning messages"
-        # query = "Alabama nurse in the states has just had the vaccine and she died 8 hours later"
-        # query = "https://www.straitstimes.com/singapore/bus-driver-arrested-for-careless-driving-after-cyclist-31-pronounced-dead-in-loyang?utm_source=Telegram&utm_medium=Social&utm_campaign=STTG"
-        # query = "https://www.theonlinecitizen.com/2020/07/03/10-mil-population-debacle-sdp-questions-why-former-dpm-heng-did-not-refute-st-report-at-the-time-it-was-published/"
-        # query = "https://newnaratif.com/podcast/an-interview-with-dr-paul-tambyah/"
-        # query = "https://www.straitstimes.com/tech/tech-news/whatsapp-delays-data-sharing-change-after-backlash-sees-users-flock-to-rivals"
-
-        # Commenting below statement because of UnicodeEncodeError when Emoji's are present
-        # print(f'INPUT QUERY: {query}')
-
-        # Check URL Validity
-        '''
-        headers = {
-            'user-agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.835.163 Safari/535.1'}
-        query_urlstatus = validators.url(query)
-        if query_urlstatus == True:
-            querytext = fulltext(requests.get(query, headers=headers).text)
-        else:
-            querytext = query
-        '''
         # Query Preprocessing
         querytext = query_preprocessing(query, surebot_logger)
 
@@ -218,10 +188,8 @@ def query_preprocessing(query, logger_handle):
             print('Exception when extracting full text from URL')
             logger_handle.info('Exception when extracting full text from URL')
 
-    # Need to check if replacing of special characters is necessary for pegasus model
-    # query = re.sub("[\n!@#$%^&*()\[\]{};:/<>?|`~\-=_+\t]", " ", query)
-    # query = re.sub("\n", " ", query)
     return query
+
 
 def configure_logger(chat):
     surebot_logger = logging.getLogger(chat)
@@ -255,12 +223,11 @@ if __name__ == "__main__":
     surebot_logger.info(surebot_banner + "version1.0\n")
 
     while True:
-        print(f'SureBoT: Input a claim that you would like to fact-check!')
+        print(f'\n\nSureBoT: Input a claim that you would like to fact-check!')
         surebot_logger.info(f'SureBoT: Input a claim that you would like to fact-check!')
         input_claim = str(input("Claim: "))
+        print(f'\n\nProcessing your claim......')
         surebot_logger.info(input_claim)
-        # print(f'\nUser: {input_claim}')
-        # text = "Heng Swee Keat out of the running for PM as he steps down from 4G Leadership"
         result = executePipeline(input_claim, surebot_logger)
         result = result.encode('utf-16', 'surrogatepass').decode('utf-16')
         print('Result is: ' + result)

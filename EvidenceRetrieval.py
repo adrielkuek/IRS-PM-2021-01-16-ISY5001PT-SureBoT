@@ -3,7 +3,7 @@ Author: Hao Zi/Adriel
 Date Created: 25 March 2021
 Version:
 Email: hz29990@gmail.com, adrielkuek@gmail.com
-Status: Devlopment
+Status: Development
 
 Description:
 Evidence Retrieval is a multi-stage document retrieval framework that takes an input
@@ -18,18 +18,16 @@ retrieve top relevant articles
 5. Return summarized articles as a list
 
 """
-from newspaper import fulltext, Article, Config
-import requests, time, os, numpy as np, pandas as pd
+from newspaper import fulltext
+import requests, time, os, numpy as np
 from transformers import AutoTokenizer, AutoModel, PegasusTokenizer, PegasusForConditionalGeneration
-from sentence_transformers import SentenceTransformer, util
+from sentence_transformers import util
 from pygooglenews import GoogleNews
 from spacy.lang.en import English
 from pprint import pprint
 import validators
 import torch
-import multiprocessing
 from celery.exceptions import SoftTimeLimitExceeded
-import logging
 
 # Params
 length_penalty = 1.0
@@ -133,12 +131,10 @@ class EvidenceRetrieval(object):
                     self.logger.info('SUMMARISATION ERROR')
                     articlesummarylist.append("")
 
-        # pprint(articlesummarylist)
-
         # Retrieve Sentence Embeddings for input query
         query_embedding = self.semanticSimilarity(input_text, max_length)
 
-        # Retreive Sentence Embeddings for articles
+        # Retrieve Sentence Embeddings for articles
         for summary in articlesummarylist:
             article_embedding = self.semanticSimilarity(summary, max_length)
             # Cosine Distance Scoring

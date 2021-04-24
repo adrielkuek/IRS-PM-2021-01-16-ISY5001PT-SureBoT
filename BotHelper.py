@@ -1,41 +1,21 @@
 import json
 import requests
-import time
 import urllib
-import config
-from transformers import pipeline
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
+import bot_config
 import gdown
 import zipfile, os
-from threading import Thread
-from SureBoT_main import executePipeline
 
-TIMEOUT = config.timeout
-TOKEN = config.token
-URL = "https://api.telegram.org/bot{}/".format(TOKEN)
-LABELS = ['misinformation', 'politics', 'health care']
-MODEL_DOWNLOAD_URL = config.model_download_url
-MODEL_ZIP = config.model_zip
-MODEL_FOLDER = config.model_folder
-
-
-def build_keyboard(items):
-    keyboard = [[item] for item in items]
-    reply_markup = {"keyboard": keyboard, "one_time_keyboard": True}
-    return json.dumps(reply_markup)
+TIMEOUT = bot_config.timeout
+TOKEN = bot_config.token
+URL = bot_config.telegram_base_url.format(TOKEN)
+MODEL_DOWNLOAD_URL = bot_config.model_download_url
+MODEL_ZIP = bot_config.model_zip
+MODEL_FOLDER = bot_config.model_folder
 
 
 def build_inline_keyboard(query):
     reply_markup = {"inline_keyboard": [[{"text": "Yes", "callback_data": "YES"},{"text": "No", "callback_data": "NO"}]]}
     return json.dumps(reply_markup)
-
-
-"""
-def send_message(text, chat_id):
-    text = urllib.parse.quote_plus(text)
-    url = URL + "sendMessage?text={}&chat_id={}".format(text, chat_id)
-    get_url(url)
-"""
 
 
 def get_url(url):

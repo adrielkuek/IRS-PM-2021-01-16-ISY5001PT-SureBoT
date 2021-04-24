@@ -5,12 +5,10 @@ from celery.exceptions import SoftTimeLimitExceeded
 import nltk
 
 from flask_celery import make_celery
-from main import downloadModels, send_message, build_inline_keyboard, answer_callback_query
-from AfterResponseMiddleware import AfterThisResponse
+from BotHelper import downloadModels, send_message, build_inline_keyboard, answer_callback_query
 from SureBoT_main import executePipeline, configure_logger
 
 main_app = Flask(__name__, static_url_path='/static')
-AfterThisResponse(main_app)
 celery = make_celery(main_app)
 celery.config_from_object('celery_config')
 n = 10
@@ -24,11 +22,17 @@ def flaskHandler():
         handle_update(update)
     except ValueError:
         print('JSON Decoding has failed')
-    return 'Displaying empty app'
+    return 'This is a Telegram Bot Server.'
+
+
+def getApp():
+    print("Calling function to initialize")
+    initCode()
+    print("Code initialization has successfully completed")
+    return main_app
 
 
 def initCode():
-    print('test is successful')
     nltk.download('punkt')
     downloadModels()
 
@@ -76,11 +80,11 @@ def handle_update(update):
                     filehandle.close()
                 elif text == "/debugGunicorn":
                     send_message("(DEBUG MODE) Fetching Gunicorn log...", chat)
-                    filehandle = open('error.log', 'r')
-                    errorlog = filehandle.read()
+                    filehandle = open('gunicorn_log.log', 'r')
+                    gunicornlog = filehandle.read()
                     filehandle.close()
                     # Return latest logs only (Max length 4096 chars)
-                    send_message(errorlog[-4096:], chat)
+                    send_message(gunicornlog[-4096:], chat)
                 elif text.startswith("/"):
                     return
                 else:
@@ -96,13 +100,7 @@ def handle_update(update):
             x = text.split("Do you want to fact check below message?\n\n", 1)[1]
             print("Split text is: " + x)
             if data == 'YES':
-                '''
-                @main_app.after_this_response
-                def post_process():
-                    send_message(executePipeline(x), chat)
-                    print("After pipeline execution")
-                '''
-                print('user choice is yes, starting post process')
+                print('User choice is yes, starting post process')
                 job = post_process.delay(x, chat)
                 print('The job id is: ' + job.id)
                 answer_callback_query(callback_query_id, "Your query is being processed.....")

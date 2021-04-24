@@ -1,12 +1,12 @@
 import gdown
 import zipfile, os
-import config
+import bot_config
 
 
-url = config.model_download_url
-output = config.model_zip
+url = bot_config.model_download_url
+output = bot_config.model_zip
 try:
-    if os.path.isdir(os.path.dirname(os.path.realpath(__file__)) + config.model_folder):
+    if os.path.isdir(os.path.dirname(os.path.realpath(__file__)) + bot_config.model_folder):
         print("Required models are already available")
     else:
         gdown.download(url, output, quiet=False)

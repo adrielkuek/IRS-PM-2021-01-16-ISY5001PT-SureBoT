@@ -1,12 +1,12 @@
 from celery import Celery
-import config
+import bot_config
 
 
 def make_celery(app):
     celery = Celery(
         app.import_name,
-        backend=config.CELERY_RESULT_BACKEND,
-        broker=config.CELERY_BROKER_URL
+        backend=bot_config.CELERY_RESULT_BACKEND,
+        broker=bot_config.CELERY_BROKER_URL
     )
     celery.conf.update(app.config)
 

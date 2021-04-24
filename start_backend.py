@@ -2,11 +2,10 @@
 
 import requests
 from pyngrok import ngrok
-import config
-import time
+import bot_config
 
-# Creat HTTP Tunnel
-TOKEN = config.token
+# Create HTTP Tunnel
+TOKEN = bot_config.token
 print(f'BOT TOKEN: {TOKEN}')
 webhook = ngrok.connect(80, bind_tls=True).public_url
 print(f'WEBHOOK: {webhook}')

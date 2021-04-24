@@ -27,3 +27,5 @@ emoji~=1.2.0
 celery~=5.0.5
 redis~=3.5.3
 supervisor~=4.2.2
+pyngrok~=5.0.5
+pyfiglet~=0.8.post1

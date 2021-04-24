@@ -3,7 +3,7 @@ Author: Adriel Kuek
 Date Created: 06 March 2021
 Version:
 Email: adrielkuek@gmail.com
-Status: Devlopment
+Status: Development
 
 Description:
 GraphNetFC is a Fact Checking model based on GEAR pipeline for claim-evidences fact-checking
@@ -16,14 +16,7 @@ information among evidence and reason over the graph. Finally, utilise an eviden
 prediction results.
 
 """
-# from __future__ import absolute_import
-# from __future__ import division
-# from __future__ import print_function
 
-# import argparse
-# import collections
-# import json
-# from tqdm import tqdm
 import numpy as np
 import os
 import time
@@ -31,16 +24,12 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 import torch
-from torch.utils.data import TensorDataset, DataLoader, SequentialSampler
-from torch.utils.data.distributed import DistributedSampler
-import torch.optim as optim
-from torch.autograd import Variable
-from torch.utils.data import TensorDataset, DataLoader
+from torch.utils.data import TensorDataset
 from pytorch_pretrained_bert.tokenization import BertTokenizer
 from pytorch_pretrained_bert.modeling import BertModel
 
 from utils import load_bert_features_claim_inference
-from models import GEAR
+from Models import GEAR
 
 BERTpretrained_dir = 'pipeline_models/pretrained_models/BERT-Pair/'
 graphNet_model_dir = 'pipeline_models/models/2layerbest.pth.tar'
@@ -320,12 +309,13 @@ def main():
     #  'The above message that has been "forwarded many times" is not real', 
     #  'WhatsApp remains a free messaging app and do not require payment details to be given prior to use']
 
-#     input_claim = 'A bus driver has been arrested for careless driving following an accident at Loyang Avenue that killed a 31-year-old cyclist.'
-#     input_evidence =  ["The cyclist who was killed along Loyang Avenue near the T-junction with Pasir Ris Drive 1 on Friday, March 19 has been identified as a 31-year-old man from the Philippines.",
-#    "The deceased man has been identified as German Gonzales from the Philippines.",
-#    "He has been working in Singapore for two years as an aircraft technician.",
-#    "The victim and his wife have two sons, aged eight and nine. Marie resides in the Philippines with the couple's children.",
-#    "Following the accident, a bus driver, 63, was arrested for careless driving causing death."]
+    # input_claim = 'A bus driver has been arrested for careless driving following an accident at Loyang Avenue that
+    # killed a 31-year-old cyclist.' input_evidence =  ["The cyclist who was killed along Loyang Avenue near the
+    # T-junction with Pasir Ris Drive 1 on Friday, March 19 has been identified as a 31-year-old man from the
+    # Philippines.", "The deceased man has been identified as German Gonzales from the Philippines.", "He has been
+    # working in Singapore for two years as an aircraft technician.", "The victim and his wife have two sons,
+    # aged eight and nine. Marie resides in the Philippines with the couple's children.", "Following the accident,
+    # a bus driver, 63, was arrested for careless driving causing death."]
 
     input_claim = 'A nurse in the states has just had the vaccine and she died 8 hours later. Politicians in the West including Pfizer CEO have NOT Taken the vaccine.'
     input_evidence = ['No health care workers died after Alabama began administering COVID-19 vaccines on Tuesday',
@@ -349,6 +339,7 @@ def main():
     ax.set(title='Attention Weights Heatmap')
     plt.savefig('2_layerER_Alabama.png', dpi=300)
     plt.show()
+
 
 if __name__ == "__main__":
     main()

@@ -3,7 +3,7 @@ pretrained_models/
 __pycache__/
 SurebotLog/
 access.log
-error.log
+gunicorn_log.log
 celery_log.log
 supervisord.log
 
