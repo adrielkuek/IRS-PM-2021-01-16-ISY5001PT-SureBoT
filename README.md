@@ -90,6 +90,7 @@ python -m spacy download en_core_web_sm
 [![Watch the video](https://img.youtube.com/vi/5dgpMpF1qrY/0.jpg)](https://youtu.be/5dgpMpF1qrY)
 
 ## SECTION 7: PROJECT REPORT / PAPER
+<<<<<<< HEAD
 
 `Refer to project report at Github Folder: ProjectReport`
 
@@ -108,5 +109,24 @@ python -m spacy download en_core_web_sm
 
 > **zhan.gu@nus.edu.sg**
 
+=======
+
+`Refer to project report at Github Folder: ProjectReport`
+
+- Executive Summary
+- Problem Description
+- Knowledge Modelling
+- Solution Outline
+- Conclusion & Reference
+- Appendix of report: Project Proposal
+- Appendix of report: Installation & User Guide
+- Appendix of report: 1-2 pages individual project report per project member
+
+**This [Machine Reasoning (MR)](https://www.iss.nus.edu.sg/executive-education/course-exams-finder/course-finder) course is part of the Analytics and Intelligent Systems and [Graduate Certificate in Intelligent Reasoning Systems (IRS)](https://www.iss.nus.edu.sg/stackable-certificate-programmes/intelligent-systems) series offered by [NUS-ISS](https://www.iss.nus.edu.sg/).**
+
+**Lecturer: [GU Zhan (Sam)](https://www.iss.nus.edu.sg/about-us/staff/detail/201/GU%20Zhan)**
+
+> **zhan.gu@nus.edu.sg**
+>>>>>>> a97685691bb3563b3bb9719b32247debc09ab674
 
 
