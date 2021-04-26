@@ -1,8 +1,8 @@
-# IRS-PM-2021-01-16-ISY5001-FactCheckingChatBot
+# IRS-PM-2021-01-16-ISY5001PT-SureBoT
 
 ## SECTION 1: PROJECT TITLE
 
-## Fact-Check Bot: Sure_BoT
+## SureBoT - An automated end-to-end fact-checking Telegram chatbot
 
 ![surebot](https://user-images.githubusercontent.com/67159970/114734523-dfb7d280-9d76-11eb-9d84-a029fa6a5a29.gif)
 
@@ -23,10 +23,10 @@ We believe that this chatbot has great value, as the shift towards digital news 
 
 | Official Full Name | Student ID (MTech Applicable) | Work Items (Who Did What) | Email (Optional)
 | ---- | ---- | ---- | ---- |
-| Adriel Kuek | A0229985H | 1. Market Research <br /> 2. System Architecture Design <br /> 3. Implementation of Model Pipeline <br /> 4. Video Creation <br /> 5. Project Report Writing| adrielkuek@gmail.com |
+| Adriel Kuek | A0229985H | 1. Market Research <br /> 2. System Architecture Design <br /> 3. Implementation of Model Pipeline <br /> 4. Video Creation <br /> 5. Project Report Writing | 6. Project Management | adrielkuek@gmail.com |
 | Chua Hao Zi | A0229960W | 1. Market Research <br /> 2. Implementation of Model Pipeline <br /> 3. Video Creation <br /> 4. Project Report Writing  | e0687368@e.nus.edu.sg |
 | Lanvaya | ---- | 1. Market Research <br /> 2. Backend Development (Google Cloud & Telegram) <br /> 3. Implementation of Model Pipeline <br /> 4. Project Report Writing | ---- |
-| Francis Louis | ---- | 1. Market Research <br /> 2. Backend Development Support <br /> 3. Project Report Writing | ---- |
+| Francis Louis | ---- | 1. Market Research <br /> 2. Project Proposal | ---- |
 
 
 ## SECTION 4: MARKETING VIDEO
@@ -41,7 +41,7 @@ Reccomend to use python 3.7 or higher. Requires Pytorch and Transformers from Hu
 
 Using `git clone`
 ```
-git clone https://github.com/adrielkuek/SureBo_T
+git clone https://github.com/adrielkuek/IRS-PM-2021-01-16-ISY5001PT-SureBoT
 ```
 **Step 2: Create a Conda Environment**
 
@@ -62,16 +62,16 @@ pip install -r requirements.txt
 
 **Download models**: https://drive.google.com/drive/folders/1EL90Wm1W5HW2jSLxQ8nSlDRBHwLQRTHj?usp=sharing
 
-Place the folders ``models/`` and ``pretrained_models/`` into the code working directory
+Place the folders ``models/`` and ``pretrained_models/`` into ``pipeline_models/`` in the code working directory
 
 The folders will look like this:
 ```
-pretrained_models/BERT-Pair/
+pipeline_models/pretrained_models/BERT-Pair/
     	pytorch_model.bin
     	vocab.txt
     	bert_config.json
     	
-models/bart-large-cnn
+pipeline_models/models/bart-large-cnn
 	msmarco-distilroberta-base-v2
 	pegasus-cnn_dailymail
 	stsb-distilbert-base
@@ -90,15 +90,21 @@ python -m spacy download en_core_web_sm
 [![Watch the video](https://img.youtube.com/vi/5dgpMpF1qrY/0.jpg)](https://youtu.be/5dgpMpF1qrY)
 
 ## SECTION 7: PROJECT REPORT / PAPER
-<<<<<<< HEAD
 
 `Refer to project report at Github Folder: ProjectReport`
 
 - Executive Summary
-- Problem Description
-- Knowledge Modelling
-- Solution Outline
-- Conclusion & Reference
+- Problem Description & Background
+- Project Objective
+- Proposed Measurement Metrics
+- System Overview
+- Knowledge Modelling & Representation
+- System Architecture
+- System Implementation
+- Assumptions
+- System Performance
+- Limitations & Improvements
+- Conclusions
 - Appendix of report: Project Proposal
 - Appendix of report: Installation & User Guide
 - Appendix of report: 1-2 pages individual project report per project member
@@ -110,23 +116,4 @@ python -m spacy download en_core_web_sm
 > **zhan.gu@nus.edu.sg**
 
 =======
-
-`Refer to project report at Github Folder: ProjectReport`
-
-- Executive Summary
-- Problem Description
-- Knowledge Modelling
-- Solution Outline
-- Conclusion & Reference
-- Appendix of report: Project Proposal
-- Appendix of report: Installation & User Guide
-- Appendix of report: 1-2 pages individual project report per project member
-
-**This [Machine Reasoning (MR)](https://www.iss.nus.edu.sg/executive-education/course-exams-finder/course-finder) course is part of the Analytics and Intelligent Systems and [Graduate Certificate in Intelligent Reasoning Systems (IRS)](https://www.iss.nus.edu.sg/stackable-certificate-programmes/intelligent-systems) series offered by [NUS-ISS](https://www.iss.nus.edu.sg/).**
-
-**Lecturer: [GU Zhan (Sam)](https://www.iss.nus.edu.sg/about-us/staff/detail/201/GU%20Zhan)**
-
-> **zhan.gu@nus.edu.sg**
->>>>>>> a97685691bb3563b3bb9719b32247debc09ab674
-
 
