@@ -86,6 +86,23 @@ Download ``en_core_web_sm`` via the following command
 ```
 python -m spacy download en_core_web_sm
 ```
+### Usage
+We provide 3 methods to implement the system architecture: Command-Line Interface, Localhost Server Bot & Telegram Bot Deployment on GCE
+
+**For details for Localhost and GCE deployment, please refer to Report Appendix for step-by-step guide to setup**
+
+For Command-Line Interface: Quick way to test out fact-checking functionality:
+
+**Step 1: Run**
+```
+python SureBoT_main.py
+```
+**Step 2: Input Query Claim**
+```
+SureBoT: Input a claim that you would like to fact-check!
+```
+**Step 3: Enter and Process Claim**
+
 ## SECTION 6: SYSTEM EXPLAINER VIDEO
 [![Watch the video](https://img.youtube.com/vi/5dgpMpF1qrY/0.jpg)](https://youtu.be/5dgpMpF1qrY)
 
