@@ -108,7 +108,7 @@ SureBoT: Input a claim that you would like to fact-check!
 
 ## SECTION 7: PROJECT REPORT / PAPER
 
-`Refer to project report at Github Folder: ProjectReport`
+`Refer to project report at Github Folder: Project_Report`
 
 - Executive Summary
 - Problem Description & Background
