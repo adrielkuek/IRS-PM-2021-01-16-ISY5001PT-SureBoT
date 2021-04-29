@@ -2,7 +2,7 @@
 
 import requests
 from pyngrok import ngrok
-import bot_config
+from Code import bot_config
 
 # Create HTTP Tunnel
 TOKEN = bot_config.token
