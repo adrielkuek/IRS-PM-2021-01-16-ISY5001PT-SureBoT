@@ -58,13 +58,13 @@ pip install -r requirements.txt
 ```
 **Step 4: Download the Models**
 
-**Download BERT pretrained**: https://drive.google.com/drive/folders/10pCx4-IYxctOtrAJjBPDZ7kum87FoqjM?usp=sharing
+**Download pretrained models**: https://drive.google.com/uc?id=1jxUd27-K51AkRX20yEHtban8Uvab7lkX
 
-**Download models**: https://drive.google.com/drive/folders/1EL90Wm1W5HW2jSLxQ8nSlDRBHwLQRTHj?usp=sharing
+Unzip the file inside the directory **IRS-PM-2021-01-16-ISY5001PT-SureBoT/Code**
 
-Place the folders ``models/`` and ``pretrained_models/`` into ``pipeline_models/`` in the code working directory
+Alternatively you can run the script **DownloadModels.py** to download and unzip the models. Please replace **<MODEL-DOWNLOAD-URL>** with the above link in the script.
 
-The folders will look like this:
+The folder structure will look like this:
 ```
 pipeline_models/pretrained_models/BERT-Pair/
     	pytorch_model.bin
