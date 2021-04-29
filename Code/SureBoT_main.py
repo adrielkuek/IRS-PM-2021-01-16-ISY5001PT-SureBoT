@@ -26,8 +26,8 @@ import emoji
 from celery.exceptions import SoftTimeLimitExceeded
 import logging
 
-from Code.EvidenceRetrieval import EvidenceRetrieval
-from Code.GraphNetFC import graphNetFC
+from EvidenceRetrieval import EvidenceRetrieval
+from GraphNetFC import graphNetFC
 from pyfiglet import Figlet
 
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')

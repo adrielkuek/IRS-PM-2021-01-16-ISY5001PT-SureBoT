@@ -1,3 +1,3 @@
-from Code.BotServer import getApp
+from BotServer import getApp
 
 app = getApp()
