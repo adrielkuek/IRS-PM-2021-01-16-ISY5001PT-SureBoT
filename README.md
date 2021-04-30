@@ -53,7 +53,7 @@ conda create -n "YOUR_ENV_NAME" python=3.7
 
 Enter folder using `cd` and install requirements using `pip`
 ```
-cd
+cd Code
 pip install -r requirements.txt
 ```
 **Step 4: Download the Models**
@@ -88,6 +88,7 @@ python -m spacy download en_core_web_sm
 ```
 ### Usage
 We provide 3 methods to implement the system architecture: Command-Line Interface, Localhost Server Bot & Telegram Bot Deployment on GCE
+
 
 **For details for Localhost and GCE deployment, please refer to Report Appendix for step-by-step guide to setup**
 
