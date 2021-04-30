@@ -156,6 +156,7 @@ def executePipeline(query, surebot_logger):
             raise
         else:
             output_message = 'Exception occurred in pipeline'
+            print(e)
 
     return output_message
 

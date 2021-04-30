@@ -1,7 +1,7 @@
 models/
 pretrained_models/
 __pycache__/
-SurebotLog/
+../SurebotLog/
 access.log
 gunicorn_log.log
 celery_log.log
